@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="alpha_white">#CBFFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="energy_green">#7ec640</color>
+    <color name="nerve_red">#b5372e</color>
+    <color name="happy_yellow">#e6e149</color>
+    <color name="life_blue">#759bec</color>
+    <color name="drug_green">#29993f</color>
+    <color name="booster_orange">#e25508</color>
+    <color name="medical_blue">#4988fa</color>
+    <color name="travel_pink">#b14bc3</color>
+</resources>

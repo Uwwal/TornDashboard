@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">TornDashboard</string>
+    <string name="settings_author">Author: Uwwal [2992478]</string>
+    <string name="button_store_string">储存key</string>
+    <string name="edit_text_key_string">输入key</string>
+    <string name="text_view_check_remind">请重新检查key！</string>
+    <string name="drug">Drug</string>
+    <string name="energy">Energy</string>
+    <string name="nerve">Nerve</string>
+    <string name="booster">Booster</string>
+    <string name="_00_00_00">00:00:00</string>
+    <string name="happy">Happy</string>
+    <string name="medical">Medical</string>
+    <string name="life">Life</string>
+    <string name="min">Min</string>
+    <string name="travel">Travel</string>
+    <string name="event">Event:</string>
+    <string name="wallet">Wallet</string>
+    <string name="update">Update</string>
+</resources>
