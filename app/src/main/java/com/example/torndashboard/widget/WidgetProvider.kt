@@ -1,5 +1,6 @@
 package com.example.torndashboard.widget
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -8,30 +9,43 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.RemoteViews
 import com.example.torndashboard.R
-
-var t = 0
+var t =0
 class WidgetProvider : AppWidgetProvider() {
-    private var t = 0
-    private val handler = Handler(Looper.getMainLooper())
 
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
-
         for (appWidgetId in appWidgetIds) {
             val views = RemoteViews(context.packageName, R.layout.widget_layout)
 
-            // 设置按钮的点击事件
-            val intent = Intent(context, YourTargetActivity::class.java)
-            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-            views.setOnClickPendingIntent(R.id.buttonWidget, pendingIntent)
+            val intent = Intent(context, WidgetProvider::class.java)
+            intent.action = "UPDATE_CLICK"
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            val pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent,
+                PendingIntent.FLAG_IMMUTABLE)
+            views.setOnClickPendingIntent(R.id.currentUpdateTextView, pendingIntent)
+            views.setOnClickPendingIntent(R.id.updateTextView, pendingIntent)
 
-            // 更新小部件
+            views.setTextViewText(R.id.currentUpdateTextView, t.toString())
+
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }
+    override fun onReceive(context: Context?, intent: Intent?) {
+        super.onReceive(context, intent)
 
+        if (intent?.action == "UPDATE_CLICK") {
+            val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+
+            t += 1
+
+            val views = RemoteViews(context?.packageName, R.layout.widget_layout)
+            views.setTextViewText(R.id.currentUpdateTextView, t.toString())
+
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
+    }
 }
