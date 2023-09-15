@@ -31,11 +31,21 @@ data class CooldownsInfo(
     val medical: Int
 )
 
-data class travelResponse(
-    val travel: travalInfo
+data class TravelResponse(
+    val travel: TravelInfo
 )
-data class travalInfo(
+data class TravelInfo(
     val time_left: Int
+)
+
+data class EventsResponse(
+    val playerId: Int,
+    val events: Map<String, EventItem>
+)
+
+data class EventItem(
+    val timestamp: Long,
+    val event: String
 )
 
 class ApiResponseCallback<T>(

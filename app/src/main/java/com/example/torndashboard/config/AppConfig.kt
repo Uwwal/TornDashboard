@@ -7,7 +7,7 @@ object AppConfig {
     var textViewCheckRemindVisibility = View.GONE
     const val maxTime = 864000
 
-    var timeFilter : BooleanArray =  booleanArrayOf(true, true, false, false, true, true, false, false)
+    var timeFilter : BooleanArray =  booleanArrayOf(true, true, false, false, true, true, false, true)
 
     fun initialize() {
 

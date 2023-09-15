@@ -12,9 +12,11 @@ import com.example.torndashboard.config.AppConfig.maxTime
 import com.example.torndashboard.config.AppConfig.timeFilter
 import com.example.torndashboard.utils.ApiResponseCallback
 import com.example.torndashboard.utils.CooldownsResponse
+import com.example.torndashboard.utils.EventsResponse
 import com.example.torndashboard.utils.MoneyResponse
 import com.example.torndashboard.web.RetrofitClient
 import com.example.torndashboard.utils.StatsResponse
+import com.example.torndashboard.utils.TravelResponse
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -39,18 +41,72 @@ class WidgetProvider : AppWidgetProvider() {
         updateStats(views, appWidgetManager, appWidgetId)
         updateMoney(views, appWidgetManager, appWidgetId)
         updateCooldowns(views, appWidgetManager, appWidgetId)
+        updateTravel(views, appWidgetManager, appWidgetId)
+        updateEvents(views, appWidgetManager, appWidgetId)
 
-        val formattedTime = getCurrentTimeFormatted()
-        views.setTextViewText(R.id.currentUpdateTextView, formattedTime)
+        setRemoteViewsText(R.id.currentUpdateTextView, getCurrentTimeFormatted())
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
 
         minTime = maxTime
     }
+
+    private fun updateEvents(
+        views: RemoteViews,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int
+    ) {
+        val eventsCall = RetrofitClient.apiService.getEventsInfo()
+
+        eventsCall.enqueue(ApiResponseCallback<EventsResponse>(
+            onSuccess = { eventsResponse ->
+                val eventsCount = eventsResponse?.events?.size ?: -1
+
+                setRemoteViewsText(R.id.currentEventTextView, eventsCount.toString())
+
+                appWidgetManager.updateAppWidget(appWidgetId, views)
+            },
+            onError = { error ->
+                error.printStackTrace()
+            }
+        ))
+    }
+
+    private fun updateTravel(
+        views: RemoteViews,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int
+    ) {
+        val travelCall = RetrofitClient.apiService.getTravelInfo()
+
+        travelCall.enqueue(ApiResponseCallback<TravelResponse>(
+            onSuccess = { travelResponse ->
+                val travel = travelResponse?.travel
+
+                val time_left = travel?.time_left ?: maxTime
+
+                if (timeFilter[7]) {
+                    if (time_left < minTime) {
+                        minTime = time_left
+                        updateTimeTextView(R.id.currentMinTextView, minTime)
+                    }
+                }
+
+                updateTimeTextView(R.id.currentTravelTextView, time_left)
+
+                appWidgetManager.updateAppWidget(appWidgetId, views)
+            },
+            onError = { error ->
+                error.printStackTrace()
+            }
+        ))
+    }
+
     private fun updateCooldowns(
         views: RemoteViews,
         appWidgetManager: AppWidgetManager,
-        appWidgetId: Int) {
+        appWidgetId: Int
+    ) {
         val cooldownsCall = RetrofitClient.apiService.getCooldownsInfo()
 
         cooldownsCall.enqueue(ApiResponseCallback<CooldownsResponse>(
@@ -58,19 +114,22 @@ class WidgetProvider : AppWidgetProvider() {
                 val cooldowns = cooldownsResponse?.cooldowns
 
                 val drug = cooldowns?.drug ?: maxTime
-                val booster = cooldowns?.booster?: maxTime
-                val medical = cooldowns?.medical?: maxTime
+                val booster = cooldowns?.booster ?: maxTime
+                val medical = cooldowns?.medical ?: maxTime
 
-                updateTimeTextView(R.id.currentDrugTextView,drug)
-                updateTimeTextView(R.id.currentBoosterTextView,booster)
-                updateTimeTextView(R.id.currentMedicalTextView,medical)
+                updateTimeTextView(R.id.currentDrugTextView, drug)
+                updateTimeTextView(R.id.currentBoosterTextView, booster)
+                updateTimeTextView(R.id.currentMedicalTextView, medical)
 
                 val timeArray = intArrayOf(drug, booster, medical)
 
                 var i = 4
-                while (i < 7){
+                while (i < 7) {
                     if (timeFilter[i]) {
-                        minTime = if (timeArray[i-4] < minTime) timeArray[i-4] else minTime
+                        if (timeArray[i - 4] < minTime) {
+                            minTime = timeArray[i - 4]
+                            updateTimeTextView(R.id.currentMinTextView, minTime)
+                        }
                     }
                     i++
                 }
@@ -84,10 +143,10 @@ class WidgetProvider : AppWidgetProvider() {
         ))
     }
 
-    private fun updateTimeTextView(id: Int, time:Int) {
-        if (time == 0){
+    private fun updateTimeTextView(id: Int, time: Int) {
+        if (time == 0) {
             setRemoteViewsText(id, "可")
-        }else{
+        } else {
             val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
             val currentTime = Date()
             val newTime = Date(currentTime.time + (time * 1000L))
@@ -153,20 +212,23 @@ class WidgetProvider : AppWidgetProvider() {
                 updateStatsView(
                     R.id.currentHappyTextView,
                     R.id.happyProgressBar,
-                    happyStats?.current?: -1,
-                    happyStats?.maximum?: -1
+                    happyStats?.current ?: -1,
+                    happyStats?.maximum ?: -1
                 )
                 updateStatsView(
                     R.id.currentLifeTextView,
                     R.id.lifeProgressBar,
-                    lifeStats?.current?: -1,
-                    lifeStats?.maximum?: -1
+                    lifeStats?.current ?: -1,
+                    lifeStats?.maximum ?: -1
                 )
 
                 var i = 0
                 while (i < 4) {
                     if (timeFilter[i]) {
-                        minTime = if (timeArray[i] < minTime) timeArray[i] else minTime
+                        if (timeArray[i] < minTime) {
+                            minTime = timeArray[i]
+                            updateTimeTextView(R.id.currentMinTextView, minTime)
+                        }
                     }
                     i++
                 }
