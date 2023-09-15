@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.torndashboard.config.AppConfig
 import com.example.torndashboard.databinding.FragmentSettingsBinding
 import com.example.torndashboard.utils.FileUtils
+import com.example.torndashboard.web.RetrofitClient
 import com.google.gson.Gson
 import java.io.File
 import java.io.IOException
@@ -61,6 +62,7 @@ class SettingsFragment : Fragment() {
                 changeTextViewCheckRemindVisibility(View.VISIBLE)
             } else {
                 binding.editTextKey.setText(key)
+                RetrofitClient.setApiKey(key)
             }
     }
 
@@ -74,6 +76,8 @@ class SettingsFragment : Fragment() {
             try {
                 configFile.writeText(gson.toJson(configMap))
                 changeTextViewCheckRemindVisibility(View.GONE)
+
+                RetrofitClient.setApiKey(keyText)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
