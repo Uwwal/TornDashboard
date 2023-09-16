@@ -58,5 +58,11 @@
             android:textColor="@color/red"
             android:visibility="gone" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_boolean_array"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

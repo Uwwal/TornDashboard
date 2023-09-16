@@ -5,21 +5,23 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.text.Html
 import android.widget.RemoteViews
+import com.example.torndashboard.MainActivity
 import com.example.torndashboard.R
-import com.example.torndashboard.config.AppConfig
+import com.example.torndashboard.utils.itemsList
 import com.example.torndashboard.config.AppConfig.maxTime
 import com.example.torndashboard.config.AppConfig.timeFilter
+import com.example.torndashboard.config.AppConfig.timeIsZeroTextVisibility
+import com.example.torndashboard.config.AppConfig.timeMinText
 import com.example.torndashboard.utils.ApiResponseCallback
 import com.example.torndashboard.utils.CooldownsResponse
 import com.example.torndashboard.utils.EventsResponse
-import com.example.torndashboard.utils.FileUtils
+import com.example.torndashboard.utils.Item
 import com.example.torndashboard.utils.MoneyResponse
 import com.example.torndashboard.web.RetrofitClient
 import com.example.torndashboard.utils.StatsResponse
 import com.example.torndashboard.utils.TravelResponse
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -27,6 +29,7 @@ import java.util.Locale
 class WidgetProvider : AppWidgetProvider() {
     private lateinit var views: RemoteViews
     private var minTime: Int = maxTime
+    private var minText: String = ""
 
     private fun getCurrentTimeFormatted(): String {
         val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
@@ -40,6 +43,8 @@ class WidgetProvider : AppWidgetProvider() {
 
     private fun update(views: RemoteViews, context: Context?, appWidgetId: Int) {
         val appWidgetManager = AppWidgetManager.getInstance(context)
+
+        minText = ""
 
         updateStats(views, appWidgetManager, appWidgetId)
         updateMoney(views, appWidgetManager, appWidgetId)
@@ -67,9 +72,27 @@ class WidgetProvider : AppWidgetProvider() {
 
                 setRemoteViewsText(R.id.currentEventTextView, eventsCount.toString())
 
+                if (eventsCount != -1 && eventsResponse?.events != null) {
+                    for ((_, eventData) in eventsResponse.events) {
+                        val timestamp = eventData.timestamp
+                        val eventText = eventData.event
+
+                        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+
+                        val item = Item(
+                            "Event",
+                            "\t\t${Html.fromHtml(eventText, Html.FROM_HTML_MODE_LEGACY)}",
+                            dateFormat.format(timestamp*1000)
+                        )
+
+                        itemsList.add(item)
+                    }
+                }
+
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             },
             onError = { error ->
+                updateError(error.toString())
                 error.printStackTrace()
             }
         ))
@@ -86,20 +109,16 @@ class WidgetProvider : AppWidgetProvider() {
             onSuccess = { travelResponse ->
                 val travel = travelResponse?.travel
 
-                val time_left = travel?.time_left ?: maxTime
+                val timeLeft = travel?.time_left ?: maxTime
 
-                if (timeFilter[7]) {
-                    if (time_left < minTime) {
-                        minTime = time_left
-                        updateTimeTextView(R.id.currentMinTextView, minTime)
-                    }
-                }
+                updateMinTime(intArrayOf(timeLeft), 7)
 
-                updateTimeTextView(R.id.currentTravelTextView, time_left)
+                updateTimeTextView(R.id.currentTravelTextView, timeLeft)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             },
             onError = { error ->
+                updateError(error.toString())
                 error.printStackTrace()
             }
         ))
@@ -126,29 +145,45 @@ class WidgetProvider : AppWidgetProvider() {
 
                 val timeArray = intArrayOf(drug, booster, medical)
 
-                var i = 4
-                while (i < 7) {
-                    if (timeFilter[i]) {
-                        if (timeArray[i - 4] < minTime) {
-                            minTime = timeArray[i - 4]
-                            updateTimeTextView(R.id.currentMinTextView, minTime)
-                        }
-                    }
-                    i++
-                }
+                updateMinTime(timeArray, 4)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             },
             onError = { error ->
-                Log.d("MyApp", error.toString())
+                updateError(error.toString())
                 error.printStackTrace()
             }
         ))
     }
 
-    private fun updateTimeTextView(id: Int, time: Int) {
+    private fun updateError(error: String) {
+        val item = Item("Error", error, getCurrentTimeFormatted())
+
+        itemsList.add(item)
+    }
+
+    private fun updateMinTime(timeArray: IntArray, start: Int = 0) {
+        var i = start
+        val end = start + timeArray.size
+        while (i < end) {
+            val current = i - start
+
+            if (timeFilter[i] && timeArray[current] <= minTime && (timeArray[current] != 0 || timeIsZeroTextVisibility[i])) {
+                if (timeArray[i - start] <= minTime) {
+                    minTime = timeArray[current]
+                    if (timeArray[current] == 0) {
+                        minText += timeMinText[i]
+                    }
+                    updateTimeTextView(R.id.currentMinTextView, minTime, minText)
+                }
+            }
+            i++
+        }
+    }
+
+    private fun updateTimeTextView(id: Int, time: Int, text: String = "可") {
         if (time == 0) {
-            setRemoteViewsText(id, "可")
+            setRemoteViewsText(id, text)
         } else {
             val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
             val currentTime = Date()
@@ -174,6 +209,7 @@ class WidgetProvider : AppWidgetProvider() {
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             },
             onError = { error ->
+                updateError(error.toString())
                 error.printStackTrace()
             }
         ))
@@ -225,20 +261,12 @@ class WidgetProvider : AppWidgetProvider() {
                     lifeStats?.maximum ?: -1
                 )
 
-                var i = 0
-                while (i < 4) {
-                    if (timeFilter[i]) {
-                        if (timeArray[i] < minTime) {
-                            minTime = timeArray[i]
-                            updateTimeTextView(R.id.currentMinTextView, minTime)
-                        }
-                    }
-                    i++
-                }
+                updateMinTime(timeArray)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             },
             onError = { error ->
+                updateError(error.toString())
                 error.printStackTrace()
             }
         ))
@@ -257,18 +285,36 @@ class WidgetProvider : AppWidgetProvider() {
         for (appWidgetId in appWidgetIds) {
             views = RemoteViews(context.packageName, R.layout.widget_layout)
 
-            val intent = Intent(context, WidgetProvider::class.java)
-            intent.action = "BUTTON_CLICK"
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            val pendingIntent = PendingIntent.getBroadcast(
-                context, appWidgetId, intent,
-                PendingIntent.FLAG_IMMUTABLE
-            )
-            views.setOnClickPendingIntent(R.id.currentUpdateTextView, pendingIntent)
-            views.setOnClickPendingIntent(R.id.updateTextView, pendingIntent)
+            setupUpdateClickEvent(context, appWidgetId)
+            setupEventClickEvent(context, appWidgetId)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
+    }
+
+    private fun setupEventClickEvent(context: Context, appWidgetId: Int) {
+        val intent = Intent(context, WidgetProvider::class.java)
+        intent.action = "Event_CLICK"
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context, appWidgetId, intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        views.setOnClickPendingIntent(R.id.eventTextView, pendingIntent)
+        views.setOnClickPendingIntent(R.id.currentEventTextView, pendingIntent)
+        views.setOnClickPendingIntent(R.id.eventLinearLayout, pendingIntent)
+    }
+
+    private fun setupUpdateClickEvent(context: Context, appWidgetId: Int) {
+        val intent = Intent(context, WidgetProvider::class.java)
+        intent.action = "UPDATE_CLICK"
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context, appWidgetId, intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        views.setOnClickPendingIntent(R.id.currentUpdateTextView, pendingIntent)
+        views.setOnClickPendingIntent(R.id.updateTextView, pendingIntent)
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -276,7 +322,7 @@ class WidgetProvider : AppWidgetProvider() {
 
         context?.let { RetrofitClient.checkApiKey(it) }
 
-        if (intent?.action == "BUTTON_CLICK") {
+        if (intent?.action == "UPDATE_CLICK") {
             val appWidgetId = intent.getIntExtra(
                 AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID
@@ -285,6 +331,11 @@ class WidgetProvider : AppWidgetProvider() {
             views = RemoteViews(context?.packageName, R.layout.widget_layout)
 
             update(views, context, appWidgetId)
+        } else if (intent?.action == "Event_CLICK") {
+            val mainActivityIntent = Intent(context, MainActivity::class.java)
+            mainActivityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+            context?.startActivity(mainActivityIntent)
         }
     }
 }

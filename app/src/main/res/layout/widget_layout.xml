@@ -208,12 +208,14 @@
                 android:text="@string/_00_00_00" />
 
             <LinearLayout
+                android:id="@+id/eventLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:paddingTop="10dp">
 
                 <TextView
+                    android:id="@+id/eventTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="4dp"
