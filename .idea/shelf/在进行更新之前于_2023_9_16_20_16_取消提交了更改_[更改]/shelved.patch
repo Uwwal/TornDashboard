@@ -1,0 +1,891 @@
+Index: app/src/main/res/layout/widget_layout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/alpha_white\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:paddingVertical=\"15dp\">\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/statLinearLayout1\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_weight=\"1\"\r\n            android:orientation=\"vertical\">\r\n\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentEnergyTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/energy\" />\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:paddingStart=\"6dp\"\r\n                android:paddingEnd=\"2dp\">\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"E\" />\r\n\r\n                <ProgressBar\r\n                    android:id=\"@+id/energyProgressBar\"\r\n                    style=\"@android:style/Widget.ProgressBar.Horizontal\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"6dp\"\r\n                    android:layout_gravity=\"center\"\r\n                    android:max=\"100\"\r\n                    android:paddingHorizontal=\"6dp\"\r\n                    android:progress=\"50\"\r\n                    android:progressDrawable=\"@drawable/custom_progress_bar\"\r\n                    android:progressTint=\"@color/energy_green\" />\r\n\r\n            </LinearLayout>\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:paddingTop=\"10dp\"\r\n                android:text=\"@string/drug\"\r\n                android:textColor=\"@color/drug_green\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentDrugTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/_00_00_00\" />\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:paddingTop=\"10dp\"\r\n                android:text=\"@string/travel\"\r\n                android:textColor=\"@color/travel_pink\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentTravelTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/_00_00_00\" />\r\n\r\n        </LinearLayout>\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/statLinearLayout2\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_weight=\"1\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentNerveTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/nerve\" />\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:paddingStart=\"2dp\"\r\n                android:paddingEnd=\"2dp\">\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"N\" />\r\n\r\n                <ProgressBar\r\n                    android:id=\"@+id/nerveProgressBar\"\r\n                    style=\"@android:style/Widget.ProgressBar.Horizontal\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"6dp\"\r\n                    android:layout_gravity=\"center\"\r\n                    android:max=\"100\"\r\n                    android:paddingHorizontal=\"6dp\"\r\n                    android:progress=\"50\"\r\n                    android:progressDrawable=\"@drawable/custom_progress_bar\"\r\n                    android:progressTint=\"@color/nerve_red\" />\r\n\r\n            </LinearLayout>\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:paddingTop=\"10dp\"\r\n                android:text=\"@string/booster\"\r\n                android:textColor=\"@color/booster_orange\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentBoosterTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/_00_00_00\" />\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:paddingTop=\"10dp\"\r\n                android:text=\"@string/wallet\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentWalletTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"$0\" />\r\n\r\n        </LinearLayout>\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/statLinearLayout3\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_weight=\"1\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentHappyTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/happy\" />\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:paddingStart=\"2dp\"\r\n                android:paddingEnd=\"2dp\">\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"H\" />\r\n\r\n                <ProgressBar\r\n                    android:id=\"@+id/happyProgressBar\"\r\n                    style=\"@android:style/Widget.ProgressBar.Horizontal\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"6dp\"\r\n                    android:layout_gravity=\"center\"\r\n                    android:max=\"100\"\r\n                    android:paddingHorizontal=\"6dp\"\r\n                    android:progress=\"50\"\r\n                    android:progressDrawable=\"@drawable/custom_progress_bar\"\r\n                    android:progressTint=\"@color/happy_yellow\" />\r\n\r\n            </LinearLayout>\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:paddingTop=\"10dp\"\r\n                android:text=\"@string/medical\"\r\n                android:textColor=\"@color/medical_blue\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentMedicalTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/_00_00_00\" />\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:gravity=\"center\"\r\n                android:paddingTop=\"10dp\">\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:paddingHorizontal=\"4dp\"\r\n                    android:text=\"@string/event\" />\r\n\r\n                <TextView\r\n                    android:id=\"@+id/currentEventTextView\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"0\" />\r\n            </LinearLayout>\r\n        </LinearLayout>\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/statLinearLayout4\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_weight=\"1\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentLifeTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/life\" />\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:paddingStart=\"2dp\"\r\n                android:paddingEnd=\"4dp\">\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"L\" />\r\n\r\n                <ProgressBar\r\n                    android:id=\"@+id/lifeProgressBar\"\r\n                    style=\"@android:style/Widget.ProgressBar.Horizontal\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"6dp\"\r\n                    android:layout_gravity=\"center\"\r\n                    android:max=\"100\"\r\n                    android:paddingHorizontal=\"6dp\"\r\n                    android:progress=\"50\"\r\n                    android:progressDrawable=\"@drawable/custom_progress_bar\"\r\n                    android:progressTint=\"@color/life_blue\" />\r\n\r\n            </LinearLayout>\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:paddingTop=\"10dp\"\r\n                android:text=\"@string/min\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentMinTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/_00_00_00\" />\r\n\r\n\r\n            <TextView\r\n                android:id=\"@+id/updateTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:paddingTop=\"10dp\"\r\n                android:text=\"@string/update\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/currentUpdateTextView\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:gravity=\"center\"\r\n                android:text=\"@string/_00_00_00\" />\r\n\r\n        </LinearLayout>\r\n\r\n    </LinearLayout>\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/widget_layout.xml b/app/src/main/res/layout/widget_layout.xml
+--- a/app/src/main/res/layout/widget_layout.xml	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/res/layout/widget_layout.xml	(date 1694866557310)
+@@ -208,12 +208,14 @@
+                 android:text="@string/_00_00_00" />
+ 
+             <LinearLayout
++                android:id="@+id/eventLinearLayout"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:gravity="center"
+                 android:paddingTop="10dp">
+ 
+                 <TextView
++                    android:id="@+id/eventTextView"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:paddingHorizontal="4dp"
+Index: app/src/main/java/com/example/torndashboard/widget/WidgetProvider.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.torndashboard.widget\r\n\r\nimport android.app.PendingIntent\r\nimport android.appwidget.AppWidgetManager\r\nimport android.appwidget.AppWidgetProvider\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.util.Log\r\nimport android.widget.RemoteViews\r\nimport com.example.torndashboard.R\r\nimport com.example.torndashboard.config.AppConfig.maxTime\r\nimport com.example.torndashboard.config.AppConfig.timeFilter\r\nimport com.example.torndashboard.utils.ApiResponseCallback\r\nimport com.example.torndashboard.utils.CooldownsResponse\r\nimport com.example.torndashboard.utils.EventsResponse\r\nimport com.example.torndashboard.utils.MoneyResponse\r\nimport com.example.torndashboard.web.RetrofitClient\r\nimport com.example.torndashboard.utils.StatsResponse\r\nimport com.example.torndashboard.utils.TravelResponse\r\nimport java.text.SimpleDateFormat\r\nimport java.util.Date\r\nimport java.util.Locale\r\n\r\nclass WidgetProvider : AppWidgetProvider() {\r\n    private lateinit var views: RemoteViews\r\n    private var minTime: Int = maxTime\r\n\r\n    private fun getCurrentTimeFormatted(): String {\r\n        val dateFormat = SimpleDateFormat(\"HH:mm:ss\", Locale.getDefault())\r\n        val currentTime = Date()\r\n        return dateFormat.format(currentTime)\r\n    }\r\n\r\n    private fun setRemoteViewsText(id: Int, string: String) {\r\n        views.setTextViewText(id, string)\r\n    }\r\n\r\n    private fun update(views: RemoteViews, context: Context?, appWidgetId: Int) {\r\n        val appWidgetManager = AppWidgetManager.getInstance(context)\r\n\r\n        updateStats(views, appWidgetManager, appWidgetId)\r\n        updateMoney(views, appWidgetManager, appWidgetId)\r\n        updateCooldowns(views, appWidgetManager, appWidgetId)\r\n        updateTravel(views, appWidgetManager, appWidgetId)\r\n        updateEvents(views, appWidgetManager, appWidgetId)\r\n\r\n        setRemoteViewsText(R.id.currentUpdateTextView, getCurrentTimeFormatted())\r\n\r\n        appWidgetManager.updateAppWidget(appWidgetId, views)\r\n\r\n        minTime = maxTime\r\n    }\r\n\r\n    private fun updateEvents(\r\n        views: RemoteViews,\r\n        appWidgetManager: AppWidgetManager,\r\n        appWidgetId: Int\r\n    ) {\r\n        val eventsCall = RetrofitClient.apiService.getEventsInfo()\r\n\r\n        eventsCall.enqueue(ApiResponseCallback<EventsResponse>(\r\n            onSuccess = { eventsResponse ->\r\n                val eventsCount = eventsResponse?.events?.size ?: -1\r\n\r\n                setRemoteViewsText(R.id.currentEventTextView, eventsCount.toString())\r\n\r\n                appWidgetManager.updateAppWidget(appWidgetId, views)\r\n            },\r\n            onError = { error ->\r\n                error.printStackTrace()\r\n            }\r\n        ))\r\n    }\r\n\r\n    private fun updateTravel(\r\n        views: RemoteViews,\r\n        appWidgetManager: AppWidgetManager,\r\n        appWidgetId: Int\r\n    ) {\r\n        val travelCall = RetrofitClient.apiService.getTravelInfo()\r\n\r\n        travelCall.enqueue(ApiResponseCallback<TravelResponse>(\r\n            onSuccess = { travelResponse ->\r\n                val travel = travelResponse?.travel\r\n\r\n                val time_left = travel?.time_left ?: maxTime\r\n\r\n                if (timeFilter[7]) {\r\n                    if (time_left < minTime) {\r\n                        minTime = time_left\r\n                        updateTimeTextView(R.id.currentMinTextView, minTime)\r\n                    }\r\n                }\r\n\r\n                updateTimeTextView(R.id.currentTravelTextView, time_left)\r\n\r\n                appWidgetManager.updateAppWidget(appWidgetId, views)\r\n            },\r\n            onError = { error ->\r\n                error.printStackTrace()\r\n            }\r\n        ))\r\n    }\r\n\r\n    private fun updateCooldowns(\r\n        views: RemoteViews,\r\n        appWidgetManager: AppWidgetManager,\r\n        appWidgetId: Int\r\n    ) {\r\n        val cooldownsCall = RetrofitClient.apiService.getCooldownsInfo()\r\n\r\n        cooldownsCall.enqueue(ApiResponseCallback<CooldownsResponse>(\r\n            onSuccess = { cooldownsResponse ->\r\n                val cooldowns = cooldownsResponse?.cooldowns\r\n\r\n                val drug = cooldowns?.drug ?: maxTime\r\n                val booster = cooldowns?.booster ?: maxTime\r\n                val medical = cooldowns?.medical ?: maxTime\r\n\r\n                updateTimeTextView(R.id.currentDrugTextView, drug)\r\n                updateTimeTextView(R.id.currentBoosterTextView, booster)\r\n                updateTimeTextView(R.id.currentMedicalTextView, medical)\r\n\r\n                val timeArray = intArrayOf(drug, booster, medical)\r\n\r\n                var i = 4\r\n                while (i < 7) {\r\n                    if (timeFilter[i]) {\r\n                        if (timeArray[i - 4] < minTime) {\r\n                            minTime = timeArray[i - 4]\r\n                            updateTimeTextView(R.id.currentMinTextView, minTime)\r\n                        }\r\n                    }\r\n                    i++\r\n                }\r\n\r\n                appWidgetManager.updateAppWidget(appWidgetId, views)\r\n            },\r\n            onError = { error ->\r\n                Log.d(\"MyApp\", error.toString())\r\n                error.printStackTrace()\r\n            }\r\n        ))\r\n    }\r\n\r\n    private fun updateTimeTextView(id: Int, time: Int) {\r\n        if (time == 0) {\r\n            setRemoteViewsText(id, \"可\")\r\n        } else {\r\n            val dateFormat = SimpleDateFormat(\"HH:mm:ss\", Locale.getDefault())\r\n            val currentTime = Date()\r\n            val newTime = Date(currentTime.time + (time * 1000L))\r\n\r\n            setRemoteViewsText(id, dateFormat.format(newTime))\r\n        }\r\n    }\r\n\r\n    private fun updateMoney(\r\n        views: RemoteViews,\r\n        appWidgetManager: AppWidgetManager,\r\n        appWidgetId: Int\r\n    ) {\r\n        val moneyCall = RetrofitClient.apiService.getMoneyInfo()\r\n\r\n        moneyCall.enqueue(ApiResponseCallback<MoneyResponse>(\r\n            onSuccess = { moneyResponse ->\r\n                val moneyOnHand = \"$\" + (moneyResponse?.money_onhand ?: -1).toString()\r\n\r\n                setRemoteViewsText(R.id.currentWalletTextView, moneyOnHand)\r\n\r\n                appWidgetManager.updateAppWidget(appWidgetId, views)\r\n            },\r\n            onError = { error ->\r\n                error.printStackTrace()\r\n            }\r\n        ))\r\n    }\r\n\r\n    private fun updateStats(\r\n        views: RemoteViews,\r\n        appWidgetManager: AppWidgetManager,\r\n        appWidgetId: Int\r\n    ) {\r\n        val statsCall = RetrofitClient.apiService.getStatsInfo()\r\n\r\n        statsCall.enqueue(ApiResponseCallback<StatsResponse>(\r\n            onSuccess = { statsResponse ->\r\n                val energyStats = statsResponse?.energy\r\n                val nerveStats = statsResponse?.nerve\r\n                val happyStats = statsResponse?.happy\r\n                val lifeStats = statsResponse?.life\r\n\r\n                val timeArray = intArrayOf(\r\n                    energyStats?.fulltime ?: maxTime,\r\n                    nerveStats?.fulltime ?: maxTime,\r\n                    happyStats?.fulltime ?: maxTime,\r\n                    lifeStats?.fulltime ?: maxTime,\r\n                )\r\n\r\n                updateStatsView(\r\n                    R.id.currentEnergyTextView,\r\n                    R.id.energyProgressBar,\r\n                    energyStats?.current ?: -1,\r\n                    energyStats?.maximum ?: -1\r\n                )\r\n                updateStatsView(\r\n                    R.id.currentNerveTextView,\r\n                    R.id.nerveProgressBar,\r\n                    nerveStats?.current ?: -1,\r\n                    nerveStats?.maximum ?: -1\r\n                )\r\n                updateStatsView(\r\n                    R.id.currentHappyTextView,\r\n                    R.id.happyProgressBar,\r\n                    happyStats?.current ?: -1,\r\n                    happyStats?.maximum ?: -1\r\n                )\r\n                updateStatsView(\r\n                    R.id.currentLifeTextView,\r\n                    R.id.lifeProgressBar,\r\n                    lifeStats?.current ?: -1,\r\n                    lifeStats?.maximum ?: -1\r\n                )\r\n\r\n                var i = 0\r\n                while (i < 4) {\r\n                    if (timeFilter[i]) {\r\n                        if (timeArray[i] < minTime) {\r\n                            minTime = timeArray[i]\r\n                            updateTimeTextView(R.id.currentMinTextView, minTime)\r\n                        }\r\n                    }\r\n                    i++\r\n                }\r\n\r\n                appWidgetManager.updateAppWidget(appWidgetId, views)\r\n            },\r\n            onError = { error ->\r\n                error.printStackTrace()\r\n            }\r\n        ))\r\n    }\r\n\r\n    private fun updateStatsView(textId: Int, barId: Int, current: Int, maximum: Int) {\r\n        views.setTextViewText(textId, \"$current/$maximum\")\r\n        views.setProgressBar(barId, 100, 100 * current / maximum, false)\r\n    }\r\n\r\n    override fun onUpdate(\r\n        context: Context,\r\n        appWidgetManager: AppWidgetManager,\r\n        appWidgetIds: IntArray\r\n    ) {\r\n        for (appWidgetId in appWidgetIds) {\r\n            views = RemoteViews(context.packageName, R.layout.widget_layout)\r\n\r\n            val intent = Intent(context, WidgetProvider::class.java)\r\n            intent.action = \"BUTTON_CLICK\"\r\n            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)\r\n            val pendingIntent = PendingIntent.getBroadcast(\r\n                context, appWidgetId, intent,\r\n                PendingIntent.FLAG_IMMUTABLE\r\n            )\r\n            views.setOnClickPendingIntent(R.id.currentUpdateTextView, pendingIntent)\r\n            views.setOnClickPendingIntent(R.id.updateTextView, pendingIntent)\r\n\r\n            appWidgetManager.updateAppWidget(appWidgetId, views)\r\n        }\r\n    }\r\n\r\n    override fun onReceive(context: Context?, intent: Intent?) {\r\n        super.onReceive(context, intent)\r\n\r\n        if (intent?.action == \"BUTTON_CLICK\") {\r\n            val appWidgetId = intent.getIntExtra(\r\n                AppWidgetManager.EXTRA_APPWIDGET_ID,\r\n                AppWidgetManager.INVALID_APPWIDGET_ID\r\n            )\r\n\r\n            views = RemoteViews(context?.packageName, R.layout.widget_layout)\r\n\r\n            update(views, context, appWidgetId)\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/torndashboard/widget/WidgetProvider.kt b/app/src/main/java/com/example/torndashboard/widget/WidgetProvider.kt
+--- a/app/src/main/java/com/example/torndashboard/widget/WidgetProvider.kt	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/java/com/example/torndashboard/widget/WidgetProvider.kt	(date 1694866557305)
+@@ -5,14 +5,23 @@
+ import android.appwidget.AppWidgetProvider
+ import android.content.Context
+ import android.content.Intent
++import android.text.Html
+ import android.util.Log
+ import android.widget.RemoteViews
++import com.example.torndashboard.MainActivity
+ import com.example.torndashboard.R
++import com.example.torndashboard.config.AppConfig
++import com.example.torndashboard.utils.itemsList
+ import com.example.torndashboard.config.AppConfig.maxTime
+ import com.example.torndashboard.config.AppConfig.timeFilter
++import com.example.torndashboard.config.AppConfig.timeIsZeroTextVisibility
++import com.example.torndashboard.config.AppConfig.timeMinText
+ import com.example.torndashboard.utils.ApiResponseCallback
+ import com.example.torndashboard.utils.CooldownsResponse
++import com.example.torndashboard.utils.ErrorInfo
++import com.example.torndashboard.utils.ErrorResponse
+ import com.example.torndashboard.utils.EventsResponse
++import com.example.torndashboard.utils.Item
+ import com.example.torndashboard.utils.MoneyResponse
+ import com.example.torndashboard.web.RetrofitClient
+ import com.example.torndashboard.utils.StatsResponse
+@@ -24,6 +33,7 @@
+ class WidgetProvider : AppWidgetProvider() {
+     private lateinit var views: RemoteViews
+     private var minTime: Int = maxTime
++    private var minText: String = ""
+ 
+     private fun getCurrentTimeFormatted(): String {
+         val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+@@ -38,6 +48,8 @@
+     private fun update(views: RemoteViews, context: Context?, appWidgetId: Int) {
+         val appWidgetManager = AppWidgetManager.getInstance(context)
+ 
++        minText = ""
++
+         updateStats(views, appWidgetManager, appWidgetId)
+         updateMoney(views, appWidgetManager, appWidgetId)
+         updateCooldowns(views, appWidgetManager, appWidgetId)
+@@ -64,14 +76,41 @@
+ 
+                 setRemoteViewsText(R.id.currentEventTextView, eventsCount.toString())
+ 
++                eventsResponse?.let { checkResponseError(it) }
++
++                if (eventsCount != -1 && eventsResponse?.events != null) {
++                    for ((_, eventData) in eventsResponse.events) {
++                        val timestamp = eventData.timestamp
++                        val eventText = eventData.event
++
++                        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
++
++                        val item = Item(
++                            "Event",
++                            "\t\t${Html.fromHtml(eventText, Html.FROM_HTML_MODE_LEGACY)}",
++                            dateFormat.format(timestamp*1000)
++                        )
++
++                        itemsList.add(item)
++                    }
++                }
++
+                 appWidgetManager.updateAppWidget(appWidgetId, views)
+             },
+             onError = { error ->
++                updateError(error.toString())
+                 error.printStackTrace()
+             }
+         ))
+     }
+ 
++    private fun checkResponseError(eventsResponse: ErrorResponse) {
++        val errorResponse = eventsResponse.error
++        if (errorResponse?.error != null) {
++            updateError("code: ${errorResponse.code}\nerror: ${errorResponse.error}")
++        }
++    }
++
+     private fun updateTravel(
+         views: RemoteViews,
+         appWidgetManager: AppWidgetManager,
+@@ -79,24 +118,25 @@
+     ) {
+         val travelCall = RetrofitClient.apiService.getTravelInfo()
+ 
++
+         travelCall.enqueue(ApiResponseCallback<TravelResponse>(
+             onSuccess = { travelResponse ->
+                 val travel = travelResponse?.travel
+ 
+-                val time_left = travel?.time_left ?: maxTime
++                val timeLeft = travel?.time_left ?: maxTime
+ 
+-                if (timeFilter[7]) {
+-                    if (time_left < minTime) {
+-                        minTime = time_left
+-                        updateTimeTextView(R.id.currentMinTextView, minTime)
+-                    }
+-                }
++                travelResponse?.let { checkResponseError(it) }
+ 
+-                updateTimeTextView(R.id.currentTravelTextView, time_left)
++                updateMinTime(intArrayOf(timeLeft), 7)
++
++                updateTimeTextView(R.id.currentTravelTextView, timeLeft)
+ 
+                 appWidgetManager.updateAppWidget(appWidgetId, views)
++
++
+             },
+             onError = { error ->
++                updateError(error.toString())
+                 error.printStackTrace()
+             }
+         ))
+@@ -117,35 +157,53 @@
+                 val booster = cooldowns?.booster ?: maxTime
+                 val medical = cooldowns?.medical ?: maxTime
+ 
++                cooldownsResponse?.let { checkResponseError(it) }
++
+                 updateTimeTextView(R.id.currentDrugTextView, drug)
+                 updateTimeTextView(R.id.currentBoosterTextView, booster)
+                 updateTimeTextView(R.id.currentMedicalTextView, medical)
+ 
+                 val timeArray = intArrayOf(drug, booster, medical)
+ 
+-                var i = 4
+-                while (i < 7) {
+-                    if (timeFilter[i]) {
+-                        if (timeArray[i - 4] < minTime) {
+-                            minTime = timeArray[i - 4]
+-                            updateTimeTextView(R.id.currentMinTextView, minTime)
+-                        }
+-                    }
+-                    i++
+-                }
++                updateMinTime(timeArray, 4)
+ 
+                 appWidgetManager.updateAppWidget(appWidgetId, views)
+             },
+             onError = { error ->
+-                Log.d("MyApp", error.toString())
++                updateError(error.toString())
+                 error.printStackTrace()
+             }
+         ))
+     }
+ 
+-    private fun updateTimeTextView(id: Int, time: Int) {
++    private fun updateError(error: String) {
++        val item = Item("Error", error, getCurrentTimeFormatted())
++
++        itemsList.add(item)
++    }
++
++    private fun updateMinTime(timeArray: IntArray, start: Int = 0) {
++        var i = start
++        val end = start + timeArray.size
++        while (i < end) {
++            val current = i - start
++
++            if (timeFilter[i] && timeArray[current] <= minTime && (timeArray[current] != 0 || timeIsZeroTextVisibility[i])) {
++                if (timeArray[i - start] <= minTime) {
++                    minTime = timeArray[current]
++                    if (timeArray[current] == 0) {
++                        minText += timeMinText[i]
++                    }
++                    updateTimeTextView(R.id.currentMinTextView, minTime, minText)
++                }
++            }
++            i++
++        }
++    }
++
++    private fun updateTimeTextView(id: Int, time: Int, text: String = "可") {
+         if (time == 0) {
+-            setRemoteViewsText(id, "可")
++            setRemoteViewsText(id, text)
+         } else {
+             val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+             val currentTime = Date()
+@@ -166,11 +224,14 @@
+             onSuccess = { moneyResponse ->
+                 val moneyOnHand = "$" + (moneyResponse?.money_onhand ?: -1).toString()
+ 
++                moneyResponse?.let { checkResponseError(it) }
++
+                 setRemoteViewsText(R.id.currentWalletTextView, moneyOnHand)
+ 
+                 appWidgetManager.updateAppWidget(appWidgetId, views)
+             },
+             onError = { error ->
++                updateError(error.toString())
+                 error.printStackTrace()
+             }
+         ))
+@@ -197,6 +258,8 @@
+                     lifeStats?.fulltime ?: maxTime,
+                 )
+ 
++                statsResponse?.let { checkResponseError(it) }
++
+                 updateStatsView(
+                     R.id.currentEnergyTextView,
+                     R.id.energyProgressBar,
+@@ -222,20 +285,12 @@
+                     lifeStats?.maximum ?: -1
+                 )
+ 
+-                var i = 0
+-                while (i < 4) {
+-                    if (timeFilter[i]) {
+-                        if (timeArray[i] < minTime) {
+-                            minTime = timeArray[i]
+-                            updateTimeTextView(R.id.currentMinTextView, minTime)
+-                        }
+-                    }
+-                    i++
+-                }
++                updateMinTime(timeArray)
+ 
+                 appWidgetManager.updateAppWidget(appWidgetId, views)
+             },
+             onError = { error ->
++                updateError(error.toString())
+                 error.printStackTrace()
+             }
+         ))
+@@ -254,32 +309,59 @@
+         for (appWidgetId in appWidgetIds) {
+             views = RemoteViews(context.packageName, R.layout.widget_layout)
+ 
+-            val intent = Intent(context, WidgetProvider::class.java)
+-            intent.action = "BUTTON_CLICK"
+-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+-            val pendingIntent = PendingIntent.getBroadcast(
+-                context, appWidgetId, intent,
+-                PendingIntent.FLAG_IMMUTABLE
+-            )
+-            views.setOnClickPendingIntent(R.id.currentUpdateTextView, pendingIntent)
+-            views.setOnClickPendingIntent(R.id.updateTextView, pendingIntent)
+-
+-            appWidgetManager.updateAppWidget(appWidgetId, views)
+-        }
++            setupUpdateClickEvent(context, appWidgetId)
++            setupEventClickEvent(context, appWidgetId)
++
++            appWidgetManager.updateAppWidget(appWidgetId, views)
++        }
++    }
++
++    private fun setupEventClickEvent(context: Context, appWidgetId: Int) {
++        val intent = Intent(context, WidgetProvider::class.java)
++        intent.action = "Event_CLICK"
++        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
++        val pendingIntent = PendingIntent.getBroadcast(
++            context, appWidgetId, intent,
++            PendingIntent.FLAG_IMMUTABLE
++        )
++        views.setOnClickPendingIntent(R.id.eventTextView, pendingIntent)
++        views.setOnClickPendingIntent(R.id.currentEventTextView, pendingIntent)
++        views.setOnClickPendingIntent(R.id.eventLinearLayout, pendingIntent)
++    }
++
++    private fun setupUpdateClickEvent(context: Context, appWidgetId: Int) {
++        val intent = Intent(context, WidgetProvider::class.java)
++        intent.action = "UPDATE_CLICK"
++        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
++        val pendingIntent = PendingIntent.getBroadcast(
++            context, appWidgetId, intent,
++            PendingIntent.FLAG_IMMUTABLE
++        )
++        views.setOnClickPendingIntent(R.id.currentUpdateTextView, pendingIntent)
++        views.setOnClickPendingIntent(R.id.updateTextView, pendingIntent)
+     }
+ 
+     override fun onReceive(context: Context?, intent: Intent?) {
+         super.onReceive(context, intent)
+ 
+-        if (intent?.action == "BUTTON_CLICK") {
++        context?.let { RetrofitClient.checkApiKey(it) }
++
++        if (intent?.action == "UPDATE_CLICK") {
+             val appWidgetId = intent.getIntExtra(
+                 AppWidgetManager.EXTRA_APPWIDGET_ID,
+                 AppWidgetManager.INVALID_APPWIDGET_ID
+             )
+ 
++            context?.let { AppConfig.initialize(context) }
++
+             views = RemoteViews(context?.packageName, R.layout.widget_layout)
+ 
+             update(views, context, appWidgetId)
++        } else if (intent?.action == "Event_CLICK") {
++            val mainActivityIntent = Intent(context, MainActivity::class.java)
++            mainActivityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
++
++            context?.startActivity(mainActivityIntent)
+         }
+     }
+ }
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id(\"com.android.application\")\r\n    id(\"org.jetbrains.kotlin.android\")\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.example.torndashboard\"\r\n    compileSdk = 33\r\n\r\n    buildFeatures {\r\n        viewBinding = true\r\n    }\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.example.torndashboard\"\r\n        minSdk = 24\r\n        targetSdk = 33\r\n        versionCode = 1\r\n        versionName = \"1.01\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_1_8\r\n        targetCompatibility = JavaVersion.VERSION_1_8\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = \"1.8\"\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation(\"androidx.core:core-ktx:1.9.0\")\r\n    implementation(\"androidx.appcompat:appcompat:1.6.1\")\r\n    implementation(\"com.squareup.retrofit2:retrofit:2.9.0\")\r\n    implementation(\"com.squareup.retrofit2:converter-gson:2.9.0\")\r\n    implementation(\"com.google.android.material:material:1.8.0\")\r\n    implementation(\"com.google.code.gson:gson:2.8.8\")\r\n    implementation(\"androidx.constraintlayout:constraintlayout:2.1.4\")\r\n    testImplementation(\"junit:junit:4.13.2\")\r\n    androidTestImplementation(\"androidx.test.ext:junit:1.1.5\")\r\n    androidTestImplementation(\"androidx.test.espresso:espresso-core:3.5.1\")\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/build.gradle.kts	(date 1694866557289)
+@@ -42,6 +42,7 @@
+ dependencies {
+     implementation("androidx.core:core-ktx:1.9.0")
+     implementation("androidx.appcompat:appcompat:1.6.1")
++    implementation("androidx.recyclerview:recyclerview:1.2.1")
+     implementation("com.squareup.retrofit2:retrofit:2.9.0")
+     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+     implementation("com.google.android.material:material:1.8.0")
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" default=\"true\" project-jdk-name=\"jbr-17\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n  <component name=\"VisualizationToolProject\">\r\n    <option name=\"state\">\r\n      <ProjectState>\r\n        <option name=\"scale\" value=\"0.10181225819588678\" />\r\n      </ProjectState>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/.idea/misc.xml	(date 1694866557288)
+@@ -1,3 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+@@ -9,7 +10,7 @@
+   <component name="VisualizationToolProject">
+     <option name="state">
+       <ProjectState>
+-        <option name="scale" value="0.10181225819588678" />
++        <option name="scale" value="0.1346938775510204" />
+       </ProjectState>
+     </option>
+   </component>
+Index: app/src/main/java/com/example/torndashboard/fragment/LogFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.torndashboard.fragment\r\n\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.fragment.app.Fragment\r\nimport com.example.torndashboard.databinding.FragmentLogBinding\r\n\r\nclass LogFragment : Fragment() {\r\n    private lateinit var binding: FragmentLogBinding\r\n\r\n    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {\r\n        binding = FragmentLogBinding.inflate(inflater, container, false)\r\n\r\n        return binding.root\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/torndashboard/fragment/LogFragment.kt b/app/src/main/java/com/example/torndashboard/fragment/LogFragment.kt
+--- a/app/src/main/java/com/example/torndashboard/fragment/LogFragment.kt	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/java/com/example/torndashboard/fragment/LogFragment.kt	(date 1694866557298)
+@@ -1,10 +1,16 @@
+ package com.example.torndashboard.fragment
+ 
++import android.content.Intent
++import android.net.Uri
+ import android.os.Bundle
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
+ import androidx.fragment.app.Fragment
++import androidx.recyclerview.widget.LinearLayoutManager
++import androidx.recyclerview.widget.RecyclerView
++import com.example.torndashboard.adapter.TextAdapter
++import com.example.torndashboard.utils.itemsList
+ import com.example.torndashboard.databinding.FragmentLogBinding
+ 
+ class LogFragment : Fragment() {
+@@ -15,4 +21,17 @@
+ 
+         return binding.root
+     }
++
++    override fun onResume() {
++        super.onResume()
++
++        val recyclerView: RecyclerView = binding.recyclerView
++        recyclerView.layoutManager = LinearLayoutManager(requireContext())
++
++        val adapter = TextAdapter(itemsList) {
++            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.torn.com/events.php"))
++            startActivity(intent)
++        }
++        recyclerView.adapter = adapter
++    }
+ }
+Index: app/src/main/java/com/example/torndashboard/web/RetrofitClient.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.torndashboard.web\r\n\r\nimport okhttp3.Interceptor\r\nimport okhttp3.OkHttpClient\r\nimport retrofit2.Retrofit\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\n\r\nobject RetrofitClient {\r\n    private const val BASE_URL = \"https://api.torn.com/\"\r\n\r\n    private var API_KEY = \"\"\r\n\r\n    fun setApiKey(key:String){\r\n        API_KEY = key\r\n    }\r\n\r\n    val apiService: TornApiService by lazy {\r\n        val retrofit = Retrofit.Builder()\r\n            .baseUrl(BASE_URL)\r\n            .addConverterFactory(GsonConverterFactory.create())\r\n            .build()\r\n\r\n        val apiKeyInterceptor = Interceptor { chain ->\r\n            val originalRequest = chain.request()\r\n            val modifiedUrl = originalRequest.url().newBuilder()\r\n                .addQueryParameter(\"key\", API_KEY)\r\n                .build()\r\n            val modifiedRequest = originalRequest.newBuilder()\r\n                .url(modifiedUrl)\r\n                .build()\r\n            chain.proceed(modifiedRequest)\r\n        }\r\n\r\n        val okHttpClient = OkHttpClient.Builder()\r\n            .addInterceptor(apiKeyInterceptor)\r\n            .build()\r\n\r\n        retrofit.newBuilder()\r\n            .client(okHttpClient)\r\n            .build()\r\n            .create(TornApiService::class.java)\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/torndashboard/web/RetrofitClient.kt b/app/src/main/java/com/example/torndashboard/web/RetrofitClient.kt
+--- a/app/src/main/java/com/example/torndashboard/web/RetrofitClient.kt	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/java/com/example/torndashboard/web/RetrofitClient.kt	(date 1694866557303)
+@@ -1,15 +1,37 @@
+ package com.example.torndashboard.web
+ 
++import android.content.Context
++import com.example.torndashboard.config.AppConfig
++import com.example.torndashboard.utils.FileUtils
+ import okhttp3.Interceptor
+ import okhttp3.OkHttpClient
+ import retrofit2.Retrofit
+ import retrofit2.converter.gson.GsonConverterFactory
++import java.io.File
+ 
+ object RetrofitClient {
+     private const val BASE_URL = "https://api.torn.com/"
+ 
+     private var API_KEY = ""
+ 
++    fun checkApiKey(context: Context){
++        if(API_KEY.isEmpty()){
++            initializeApiKey(context)
++        }
++    }
++
++    private fun initializeApiKey(context: Context) {
++        val configFile = File(context.filesDir, AppConfig.configFileName)
++        if (configFile.exists()) {
++            val fileUtils = FileUtils(context)
++            val key = fileUtils.getKey()
++
++            if (!key.isNullOrEmpty()) {
++                API_KEY = key
++            }
++        }
++    }
++
+     fun setApiKey(key:String){
+         API_KEY = key
+     }
+Index: app/src/main/java/com/example/torndashboard/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.torndashboard\r\n\r\nimport android.os.Bundle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.appcompat.widget.Toolbar\r\nimport androidx.fragment.app.Fragment\r\nimport com.example.torndashboard.config.AppConfig\r\nimport com.example.torndashboard.databinding.ActivityMainBinding\r\nimport com.example.torndashboard.fragment.LogFragment\r\nimport com.example.torndashboard.fragment.SettingsFragment\r\nimport com.example.torndashboard.utils.FileUtils\r\nimport com.example.torndashboard.web.RetrofitClient\r\nimport java.io.File\r\n\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n    private lateinit var binding: ActivityMainBinding\r\n\r\n    private fun initApiKey(){\r\n        val configFile = File(filesDir, AppConfig.configFileName)\r\n        if (configFile.exists()) {\r\n            val fileUtils = FileUtils(this)\r\n            val key = fileUtils.getKey()\r\n\r\n            if (!key.isNullOrEmpty()) {\r\n                RetrofitClient.setApiKey(key)\r\n            }\r\n        }\r\n    }\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n        binding = ActivityMainBinding.inflate(layoutInflater)\r\n        setContentView(binding.root)\r\n\r\n        val toolbar: Toolbar = binding.toolbar\r\n        setSupportActionBar(toolbar)\r\n        supportActionBar?.title = \"日志\"\r\n\r\n        initApiKey()\r\n\r\n        binding.bottomNavigationView.setOnItemSelectedListener { item ->\r\n            when (item.itemId) {\r\n                R.id.action_logs -> {\r\n                    supportActionBar?.title = \"日志\"\r\n                    showFragment(LogFragment())\r\n                    true\r\n                }\r\n                R.id.action_settings -> {\r\n                    supportActionBar?.title = \"设置\"\r\n                    showFragment(SettingsFragment())\r\n                    true\r\n                }\r\n                else -> false\r\n            }\r\n        }\r\n        showFragment(LogFragment())\r\n    }\r\n\r\n    private fun showFragment(fragment: Fragment) {\r\n        supportFragmentManager.beginTransaction()\r\n            .replace(R.id.container, fragment)\r\n            .commit()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/torndashboard/MainActivity.kt b/app/src/main/java/com/example/torndashboard/MainActivity.kt
+--- a/app/src/main/java/com/example/torndashboard/MainActivity.kt	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/java/com/example/torndashboard/MainActivity.kt	(date 1694866557292)
+@@ -31,6 +31,8 @@
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+ 
++        AppConfig.initialize(this)
++
+         binding = ActivityMainBinding.inflate(layoutInflater)
+         setContentView(binding.root)
+ 
+Index: app/src/main/res/layout/fragment_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/fragmentSettingsVerticalLinearLayout\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        android:padding=\"16dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textViewDisplay\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"@string/settings_author\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            android:layout_marginTop=\"20dp\"\r\n            android:layout_marginBottom=\"20dp\"\r\n            android:textSize=\"18sp\" />\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/fragmentSettingsHorizontalLinearLayout\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"horizontal\">\r\n\r\n            <EditText\r\n                android:id=\"@+id/editTextKey\"\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_weight=\"1\"\r\n                android:hint=\"@string/edit_text_key_string\"\r\n                android:inputType=\"text\"\r\n                android:minHeight=\"48dp\"\r\n                android:autofillHints=\"username\" />\r\n\r\n            <Button\r\n                android:id=\"@+id/buttonStore\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/button_store_string\" />\r\n        </LinearLayout>\r\n\r\n        <TextView\r\n            android:id=\"@+id/textViewCheckRemind\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"@string/text_view_check_remind\"\r\n            android:textColor=\"@color/red\"\r\n            android:visibility=\"gone\" />\r\n\r\n    </LinearLayout>\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_settings.xml b/app/src/main/res/layout/fragment_settings.xml
+--- a/app/src/main/res/layout/fragment_settings.xml	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/res/layout/fragment_settings.xml	(date 1694866557307)
+@@ -5,58 +5,92 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+ 
+-    <LinearLayout
+-        android:id="@+id/fragmentSettingsVerticalLinearLayout"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:orientation="vertical"
+-        app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        android:padding="16dp">
++    <androidx.core.widget.NestedScrollView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent">
++
++        <LinearLayout
++            android:id="@+id/fragmentSettingsVerticalLinearLayout"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:orientation="vertical"
++            android:padding="16dp"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent">
+ 
+-        <TextView
+-            android:id="@+id/textViewDisplay"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:text="@string/settings_author"
+-            app:layout_constraintTop_toTopOf="parent"
+-            app:layout_constraintStart_toStartOf="parent"
+-            app:layout_constraintEnd_toEndOf="parent"
+-            android:layout_marginTop="20dp"
+-            android:layout_marginBottom="20dp"
+-            android:textSize="18sp" />
++            <TextView
++                android:id="@+id/textViewDisplay"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:paddingVertical="20dp"
++                android:text="@string/settings_author"
++                android:textSize="18sp"
++                app:layout_constraintEnd_toEndOf="parent"
++                app:layout_constraintStart_toStartOf="parent"
++                app:layout_constraintTop_toTopOf="parent" />
+ 
+-        <LinearLayout
+-            android:id="@+id/fragmentSettingsHorizontalLinearLayout"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:orientation="horizontal">
++            <LinearLayout
++                android:id="@+id/fragmentSettingsHorizontalLinearLayout"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:orientation="horizontal">
+ 
+-            <EditText
+-                android:id="@+id/editTextKey"
+-                android:layout_width="0dp"
+-                android:layout_height="wrap_content"
+-                android:layout_weight="1"
+-                android:hint="@string/edit_text_key_string"
+-                android:inputType="text"
+-                android:minHeight="48dp"
+-                android:autofillHints="username" />
++                <EditText
++                    android:id="@+id/editTextKey"
++                    android:layout_width="0dp"
++                    android:layout_height="wrap_content"
++                    android:layout_weight="1"
++                    android:autofillHints="username"
++                    android:hint="@string/edit_text_key_string"
++                    android:inputType="text"
++                    android:minHeight="48dp" />
+ 
+-            <Button
+-                android:id="@+id/buttonStore"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="@string/button_store_string" />
+-        </LinearLayout>
++                <Button
++                    android:id="@+id/buttonStore"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:text="@string/button_store_string" />
++            </LinearLayout>
+ 
+-        <TextView
+-            android:id="@+id/textViewCheckRemind"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:text="@string/text_view_check_remind"
+-            android:textColor="@color/red"
+-            android:visibility="gone" />
++            <TextView
++                android:id="@+id/textViewCheckRemind"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/text_view_check_remind"
++                android:textColor="@color/red"
++                android:visibility="gone" />
+ 
+-    </LinearLayout>
++            <TextView
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:paddingVertical="10dp"
++                android:text="@string/min_time_hint"
++                android:textColor="@color/grey" />
++
++            <androidx.recyclerview.widget.RecyclerView
++                android:id="@+id/recyclerView"
++                android:layout_width="match_parent"
++                android:layout_height="match_parent"
++                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
++                tools:listitem="@layout/item_boolean_array" />
++
++            <TextView
++                android:id="@+id/howToUseTextView"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:paddingVertical="10dp"
++                android:textSize="18sp"
++                android:text="@string/how_to_use" />
++
++            <TextView
++                android:id="@+id/mainHintTextView"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:textColor="@color/grey"
++                android:visibility="gone"
++                android:text="@string/main_hint" />
++
++        </LinearLayout>
++    </androidx.core.widget.NestedScrollView>
+ </androidx.constraintlayout.widget.ConstraintLayout>
+Index: app/src/main/java/com/example/torndashboard/config/AppConfig.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.torndashboard.config\r\n\r\nimport android.view.View\r\n\r\nobject AppConfig {\r\n    const val configFileName = \"config.json\"\r\n    var textViewCheckRemindVisibility = View.GONE\r\n    const val maxTime = 864000\r\n\r\n    var timeFilter : BooleanArray =  booleanArrayOf(true, true, false, false, true, true, false, true)\r\n\r\n    fun initialize() {\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/torndashboard/config/AppConfig.kt b/app/src/main/java/com/example/torndashboard/config/AppConfig.kt
+--- a/app/src/main/java/com/example/torndashboard/config/AppConfig.kt	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/java/com/example/torndashboard/config/AppConfig.kt	(date 1694866557296)
+@@ -1,15 +1,24 @@
+ package com.example.torndashboard.config
+ 
++import android.content.Context
+ import android.view.View
++import com.example.torndashboard.preferences.TimeBooleanArrayPreferences
+ 
+ object AppConfig {
+     const val configFileName = "config.json"
++
+     var textViewCheckRemindVisibility = View.GONE
++
+     const val maxTime = 864000
+ 
+     var timeFilter : BooleanArray =  booleanArrayOf(true, true, false, false, true, true, false, true)
++    var timeMinText : Array<String> =  arrayOf("能量", "神经", "快乐", "生命", "毒品", "饮料", "医疗", "飞行")
++    var timeIsZeroTextVisibility : BooleanArray = booleanArrayOf(true, true, false, false, true, true, false, false)
+ 
+-    fun initialize() {
++    fun initialize(context: Context) {
++        val timeBooleanArrayPreferences = TimeBooleanArrayPreferences(context)
+ 
++        timeFilter = timeBooleanArrayPreferences.getTimeFilter()
++        timeIsZeroTextVisibility = timeBooleanArrayPreferences.getTimeIsZeroTextVisibility()
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_log.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_log.xml b/app/src/main/res/layout/fragment_log.xml
+--- a/app/src/main/res/layout/fragment_log.xml	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/res/layout/fragment_log.xml	(date 1694866557306)
+@@ -5,4 +5,12 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+ 
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++    <androidx.recyclerview.widget.RecyclerView
++        android:id="@+id/recyclerView"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
++        android:paddingHorizontal="12dp"
++        tools:listitem="@layout/item_text" />
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+Index: app/src/main/java/com/example/torndashboard/fragment/SettingsFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.torndashboard.fragment\r\n\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.fragment.app.Fragment\r\nimport com.example.torndashboard.config.AppConfig\r\nimport com.example.torndashboard.databinding.FragmentSettingsBinding\r\nimport com.example.torndashboard.utils.FileUtils\r\nimport com.example.torndashboard.web.RetrofitClient\r\nimport com.google.gson.Gson\r\nimport java.io.File\r\nimport java.io.IOException\r\n\r\nclass SettingsFragment : Fragment() {\r\n    private lateinit var binding: FragmentSettingsBinding\r\n\r\n    private val gson = Gson()\r\n\r\n    private fun changeTextViewCheckRemindVisibility(visibility: Int){\r\n        binding.textViewCheckRemind.visibility = visibility\r\n        AppConfig.textViewCheckRemindVisibility = visibility\r\n    }\r\n\r\n    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {\r\n        binding = FragmentSettingsBinding.inflate(inflater, container, false)\r\n\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        binding.textViewCheckRemind.visibility = AppConfig.textViewCheckRemindVisibility\r\n\r\n        checkConfigFile()\r\n        loadAndFillKey()\r\n\r\n        binding.buttonStore.setOnClickListener {\r\n            onButtonStoreClick()\r\n        }\r\n    }\r\n\r\n    private fun checkConfigFile() {\r\n        val configFile = File(requireContext().filesDir, AppConfig.configFileName)\r\n        if (!configFile.exists()) {\r\n            try {\r\n                configFile.writeText(\"{}\") // Create an empty JSON object\r\n                changeTextViewCheckRemindVisibility(View.VISIBLE)\r\n            } catch (e: IOException) {\r\n                e.printStackTrace()\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun loadAndFillKey() {\r\n        val fileUtils = FileUtils(requireContext())\r\n        val key = fileUtils.getKey()\r\n\r\n        if (key.isNullOrEmpty()) {\r\n                changeTextViewCheckRemindVisibility(View.VISIBLE)\r\n            } else {\r\n                binding.editTextKey.setText(key)\r\n                RetrofitClient.setApiKey(key)\r\n            }\r\n    }\r\n\r\n    private fun onButtonStoreClick() {\r\n        val configFile = File(requireContext().filesDir, AppConfig.configFileName)\r\n        val configMap = mutableMapOf<String, String>()\r\n\r\n        val keyText = binding.editTextKey.text.toString().trim()\r\n        if (keyText.isNotEmpty()) {\r\n            configMap[\"KEY\"] = keyText\r\n            try {\r\n                configFile.writeText(gson.toJson(configMap))\r\n                changeTextViewCheckRemindVisibility(View.GONE)\r\n\r\n                RetrofitClient.setApiKey(keyText)\r\n            } catch (e: IOException) {\r\n                e.printStackTrace()\r\n            }\r\n        } else {\r\n            changeTextViewCheckRemindVisibility(View.VISIBLE)\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/torndashboard/fragment/SettingsFragment.kt b/app/src/main/java/com/example/torndashboard/fragment/SettingsFragment.kt
+--- a/app/src/main/java/com/example/torndashboard/fragment/SettingsFragment.kt	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/java/com/example/torndashboard/fragment/SettingsFragment.kt	(date 1694866557298)
+@@ -5,7 +5,12 @@
+ import android.view.View
+ import android.view.ViewGroup
+ import androidx.fragment.app.Fragment
++import androidx.recyclerview.widget.LinearLayoutManager
++import androidx.recyclerview.widget.RecyclerView
++import com.example.torndashboard.adapter.BooleanArrayAdapter
+ import com.example.torndashboard.config.AppConfig
++import com.example.torndashboard.config.AppConfig.timeFilter
++import com.example.torndashboard.config.AppConfig.timeIsZeroTextVisibility
+ import com.example.torndashboard.databinding.FragmentSettingsBinding
+ import com.example.torndashboard.utils.FileUtils
+ import com.example.torndashboard.web.RetrofitClient
+@@ -26,6 +31,12 @@
+     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+         binding = FragmentSettingsBinding.inflate(inflater, container, false)
+ 
++        val recyclerView: RecyclerView = binding.recyclerView
++        recyclerView.layoutManager = LinearLayoutManager(requireContext())
++
++        val adapter = BooleanArrayAdapter(timeFilter, timeIsZeroTextVisibility, requireContext())
++        recyclerView.adapter = adapter
++
+         return binding.root
+     }
+ 
+@@ -40,6 +51,10 @@
+         binding.buttonStore.setOnClickListener {
+             onButtonStoreClick()
+         }
++
++        binding.howToUseTextView.setOnClickListener {
++            binding.mainHintTextView.visibility = View.VISIBLE
++        }
+     }
+ 
+     private fun checkConfigFile() {
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">TornDashboard</string>\r\n    <string name=\"settings_author\">Author: Uwwal [2992478]</string>\r\n    <string name=\"button_store_string\">储存key</string>\r\n    <string name=\"edit_text_key_string\">输入key</string>\r\n    <string name=\"text_view_check_remind\">请重新检查key！</string>\r\n    <string name=\"drug\">Drug</string>\r\n    <string name=\"energy\">Energy</string>\r\n    <string name=\"nerve\">Nerve</string>\r\n    <string name=\"booster\">Booster</string>\r\n    <string name=\"_00_00_00\">00:00:00</string>\r\n    <string name=\"happy\">Happy</string>\r\n    <string name=\"medical\">Medical</string>\r\n    <string name=\"life\">Life</string>\r\n    <string name=\"min\">Min</string>\r\n    <string name=\"travel\">Travel</string>\r\n    <string name=\"event\">Event:</string>\r\n    <string name=\"wallet\">Wallet</string>\r\n    <string name=\"update\">Update</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/res/values/strings.xml	(date 1694866557312)
+@@ -17,4 +17,7 @@
+     <string name="event">Event:</string>
+     <string name="wallet">Wallet</string>
+     <string name="update">Update</string>
++    <string name="min_time_hint">右侧第一个按钮为，是否参与最快时间计算\n右侧第二个按钮为，若对应项时间为0是否替换Min处文本</string>
++    <string name="how_to_use">咋用啊？</string>
++    <string name="main_hint">第一步：输入你的key，然后储存\n第二步：添加桌面小部件，不同系统方法不同，不会请百度\n第三步：匿名送我money🥳\n其他提示：update点击效果是手动获取状态，event点击可以在日志里看到具体</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"black\">#FF000000</color>\r\n    <color name=\"white\">#FFFFFFFF</color>\r\n    <color name=\"alpha_white\">#CBFFFFFF</color>\r\n    <color name=\"red\">#FF0000</color>\r\n    <color name=\"energy_green\">#7ec640</color>\r\n    <color name=\"nerve_red\">#b5372e</color>\r\n    <color name=\"happy_yellow\">#e6e149</color>\r\n    <color name=\"life_blue\">#759bec</color>\r\n    <color name=\"drug_green\">#29993f</color>\r\n    <color name=\"booster_orange\">#e25508</color>\r\n    <color name=\"medical_blue\">#4988fa</color>\r\n    <color name=\"travel_pink\">#b14bc3</color>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+--- a/app/src/main/res/values/colors.xml	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/res/values/colors.xml	(date 1694866557311)
+@@ -12,4 +12,5 @@
+     <color name="booster_orange">#e25508</color>
+     <color name="medical_blue">#4988fa</color>
+     <color name="travel_pink">#b14bc3</color>
++    <color name="grey">#CB505050</color>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/com/example/torndashboard/utils/ResponseUtils.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.torndashboard.utils\r\n\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.HttpException\r\nimport retrofit2.Response\r\n\r\n\r\ndata class MoneyResponse(\r\n    val money_onhand: Int\r\n)\r\n\r\ndata class StatsResponse(\r\n    val energy: StatsInfo,\r\n    val nerve: StatsInfo,\r\n    val happy: StatsInfo,\r\n    val life: StatsInfo,\r\n)\r\n\r\ndata class StatsInfo(\r\n    val current: Int,\r\n    val maximum: Int,\r\n    val fulltime: Int\r\n)\r\ndata class CooldownsResponse(\r\n    val cooldowns: CooldownsInfo\r\n)\r\ndata class CooldownsInfo(\r\n    val drug: Int,\r\n    val booster: Int,\r\n    val medical: Int\r\n)\r\n\r\ndata class TravelResponse(\r\n    val travel: TravelInfo\r\n)\r\ndata class TravelInfo(\r\n    val time_left: Int\r\n)\r\n\r\ndata class EventsResponse(\r\n    val playerId: Int,\r\n    val events: Map<String, EventItem>\r\n)\r\n\r\ndata class EventItem(\r\n    val timestamp: Long,\r\n    val event: String\r\n)\r\n\r\nclass ApiResponseCallback<T>(\r\n    private val onSuccess: (T?) -> Unit,\r\n    private val onError: (Throwable) -> Unit\r\n) : Callback<T> {\r\n    override fun onResponse(call: Call<T>, response: Response<T>) {\r\n        if (response.isSuccessful) {\r\n            onSuccess(response.body())\r\n        } else {\r\n            onError(HttpException(response))\r\n        }\r\n    }\r\n    override fun onFailure(call: Call<T>, t: Throwable) {\r\n        onError(t)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/torndashboard/utils/ResponseUtils.kt b/app/src/main/java/com/example/torndashboard/utils/ResponseUtils.kt
+--- a/app/src/main/java/com/example/torndashboard/utils/ResponseUtils.kt	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/java/com/example/torndashboard/utils/ResponseUtils.kt	(date 1694866557302)
+@@ -7,24 +7,27 @@
+ 
+ 
+ data class MoneyResponse(
+-    val money_onhand: Int
+-)
++    val money_onhand: Int,
++    override val error: ErrorInfo?
++):ErrorResponse
+ 
+ data class StatsResponse(
+     val energy: StatsInfo,
+     val nerve: StatsInfo,
+     val happy: StatsInfo,
+     val life: StatsInfo,
+-)
++    override val error: ErrorInfo?
++):ErrorResponse
+ 
+ data class StatsInfo(
+     val current: Int,
+     val maximum: Int,
+-    val fulltime: Int
++    val fulltime: Int,
+ )
+ data class CooldownsResponse(
+-    val cooldowns: CooldownsInfo
+-)
++    val cooldowns: CooldownsInfo,
++    override val error: ErrorInfo?
++):ErrorResponse
+ data class CooldownsInfo(
+     val drug: Int,
+     val booster: Int,
+@@ -32,22 +35,33 @@
+ )
+ 
+ data class TravelResponse(
+-    val travel: TravelInfo
+-)
++    val travel: TravelInfo,
++    override val error: ErrorInfo?
++):ErrorResponse
+ data class TravelInfo(
+     val time_left: Int
+ )
+ 
+ data class EventsResponse(
+     val playerId: Int,
+-    val events: Map<String, EventItem>
+-)
++    val events: Map<String, EventItem>,
++    override val error: ErrorInfo?
++):ErrorResponse
+ 
+ data class EventItem(
+     val timestamp: Long,
+     val event: String
+ )
+ 
++interface ErrorResponse {
++    val error: ErrorInfo?
++}
++
++data class ErrorInfo(
++    val code: Int,
++    val error: String
++)
++
+ class ApiResponseCallback<T>(
+     private val onSuccess: (T?) -> Unit,
+     private val onError: (Throwable) -> Unit
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n    <uses-permission android:name=\"android.permission.INTERNET\"/>\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.TornDashboard\"\r\n        tools:targetApi=\"31\">\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <receiver\r\n            android:name=\".widget.WidgetProvider\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.appwidget.action.APPWIDGET_UPDATE\" />\r\n            </intent-filter>\r\n            <meta-data\r\n                android:name=\"android.appwidget.provider\"\r\n                android:resource=\"@xml/widget_info\" />\r\n        </receiver>\r\n\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 6e2d1ab8a400179a2dda86a33e0be64e47fe56bc)
++++ b/app/src/main/AndroidManifest.xml	(date 1694866557290)
+@@ -12,7 +12,8 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/Theme.TornDashboard"
+-        tools:targetApi="31">
++        android:enableOnBackInvokedCallback="true"
++        tools:targetApi="tiramisu">
+         <activity
+             android:name=".MainActivity"
+             android:exported="true">
