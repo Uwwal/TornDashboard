@@ -7,24 +7,27 @@ import retrofit2.Response
 
 
 data class MoneyResponse(
-    val money_onhand: Int
-)
+    val money_onhand: Int,
+    override val error: ErrorInfo?
+):ErrorResponse
 
 data class StatsResponse(
     val energy: StatsInfo,
     val nerve: StatsInfo,
     val happy: StatsInfo,
     val life: StatsInfo,
-)
+    override val error: ErrorInfo?
+):ErrorResponse
 
 data class StatsInfo(
     val current: Int,
     val maximum: Int,
-    val fulltime: Int
+    val fulltime: Int,
 )
 data class CooldownsResponse(
-    val cooldowns: CooldownsInfo
-)
+    val cooldowns: CooldownsInfo,
+    override val error: ErrorInfo?
+):ErrorResponse
 data class CooldownsInfo(
     val drug: Int,
     val booster: Int,
@@ -32,20 +35,31 @@ data class CooldownsInfo(
 )
 
 data class TravelResponse(
-    val travel: TravelInfo
-)
+    val travel: TravelInfo,
+    override val error: ErrorInfo?
+):ErrorResponse
 data class TravelInfo(
     val time_left: Int
 )
 
 data class EventsResponse(
     val playerId: Int,
-    val events: Map<String, EventItem>
-)
+    val events: Map<String, EventItem>,
+    override val error: ErrorInfo?
+):ErrorResponse
 
 data class EventItem(
     val timestamp: Long,
     val event: String
+)
+
+interface ErrorResponse {
+    val error: ErrorInfo?
+}
+
+data class ErrorInfo(
+    val code: Int,
+    val error: String
 )
 
 class ApiResponseCallback<T>(

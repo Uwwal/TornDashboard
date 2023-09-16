@@ -6,9 +6,11 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.text.Html
+import android.util.Log
 import android.widget.RemoteViews
 import com.example.torndashboard.MainActivity
 import com.example.torndashboard.R
+import com.example.torndashboard.config.AppConfig
 import com.example.torndashboard.utils.itemsList
 import com.example.torndashboard.config.AppConfig.maxTime
 import com.example.torndashboard.config.AppConfig.timeFilter
@@ -16,6 +18,8 @@ import com.example.torndashboard.config.AppConfig.timeIsZeroTextVisibility
 import com.example.torndashboard.config.AppConfig.timeMinText
 import com.example.torndashboard.utils.ApiResponseCallback
 import com.example.torndashboard.utils.CooldownsResponse
+import com.example.torndashboard.utils.ErrorInfo
+import com.example.torndashboard.utils.ErrorResponse
 import com.example.torndashboard.utils.EventsResponse
 import com.example.torndashboard.utils.Item
 import com.example.torndashboard.utils.MoneyResponse
@@ -72,6 +76,8 @@ class WidgetProvider : AppWidgetProvider() {
 
                 setRemoteViewsText(R.id.currentEventTextView, eventsCount.toString())
 
+                eventsResponse?.let { checkResponseError(it) }
+
                 if (eventsCount != -1 && eventsResponse?.events != null) {
                     for ((_, eventData) in eventsResponse.events) {
                         val timestamp = eventData.timestamp
@@ -98,6 +104,13 @@ class WidgetProvider : AppWidgetProvider() {
         ))
     }
 
+    private fun checkResponseError(eventsResponse: ErrorResponse) {
+        val errorResponse = eventsResponse.error
+        if (errorResponse?.error != null) {
+            updateError("code: ${errorResponse.code}\nerror: ${errorResponse.error}")
+        }
+    }
+
     private fun updateTravel(
         views: RemoteViews,
         appWidgetManager: AppWidgetManager,
@@ -105,17 +118,22 @@ class WidgetProvider : AppWidgetProvider() {
     ) {
         val travelCall = RetrofitClient.apiService.getTravelInfo()
 
+
         travelCall.enqueue(ApiResponseCallback<TravelResponse>(
             onSuccess = { travelResponse ->
                 val travel = travelResponse?.travel
 
                 val timeLeft = travel?.time_left ?: maxTime
 
+                travelResponse?.let { checkResponseError(it) }
+
                 updateMinTime(intArrayOf(timeLeft), 7)
 
                 updateTimeTextView(R.id.currentTravelTextView, timeLeft)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
+
+
             },
             onError = { error ->
                 updateError(error.toString())
@@ -138,6 +156,8 @@ class WidgetProvider : AppWidgetProvider() {
                 val drug = cooldowns?.drug ?: maxTime
                 val booster = cooldowns?.booster ?: maxTime
                 val medical = cooldowns?.medical ?: maxTime
+
+                cooldownsResponse?.let { checkResponseError(it) }
 
                 updateTimeTextView(R.id.currentDrugTextView, drug)
                 updateTimeTextView(R.id.currentBoosterTextView, booster)
@@ -204,6 +224,8 @@ class WidgetProvider : AppWidgetProvider() {
             onSuccess = { moneyResponse ->
                 val moneyOnHand = "$" + (moneyResponse?.money_onhand ?: -1).toString()
 
+                moneyResponse?.let { checkResponseError(it) }
+
                 setRemoteViewsText(R.id.currentWalletTextView, moneyOnHand)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
@@ -235,6 +257,8 @@ class WidgetProvider : AppWidgetProvider() {
                     happyStats?.fulltime ?: maxTime,
                     lifeStats?.fulltime ?: maxTime,
                 )
+
+                statsResponse?.let { checkResponseError(it) }
 
                 updateStatsView(
                     R.id.currentEnergyTextView,
@@ -327,6 +351,8 @@ class WidgetProvider : AppWidgetProvider() {
                 AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID
             )
+
+            context?.let { AppConfig.initialize(context) }
 
             views = RemoteViews(context?.packageName, R.layout.widget_layout)
 

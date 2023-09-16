@@ -1,7 +1,5 @@
 package com.example.torndashboard.fragment
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.torndashboard.adapter.TextAdapter
+import com.example.torndashboard.adapter.BooleanArrayAdapter
 import com.example.torndashboard.config.AppConfig
+import com.example.torndashboard.config.AppConfig.timeFilter
+import com.example.torndashboard.config.AppConfig.timeIsZeroTextVisibility
 import com.example.torndashboard.databinding.FragmentSettingsBinding
 import com.example.torndashboard.utils.FileUtils
-import com.example.torndashboard.utils.itemsList
 import com.example.torndashboard.web.RetrofitClient
 import com.google.gson.Gson
 import java.io.File
@@ -31,6 +30,12 @@ class SettingsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        val recyclerView: RecyclerView = binding.recyclerView
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val adapter = BooleanArrayAdapter(timeFilter, timeIsZeroTextVisibility, requireContext())
+        recyclerView.adapter = adapter
 
         return binding.root
     }

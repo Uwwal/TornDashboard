@@ -12,4 +12,5 @@
     <color name="booster_orange">#e25508</color>
     <color name="medical_blue">#4988fa</color>
     <color name="travel_pink">#b14bc3</color>
+    <color name="grey">#CB505050</color>
 </resources>

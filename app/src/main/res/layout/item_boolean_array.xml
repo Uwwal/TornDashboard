@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/textView"
@@ -13,14 +12,14 @@
         android:text="Item"
         android:textSize="18sp" />
 
-    <RadioButton
-        android:id="@+id/timeFilterButton"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/timeFilterSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false" />
 
-    <RadioButton
-        android:id="@+id/timeIsZeroButton"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/timeIsZeroSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false" />

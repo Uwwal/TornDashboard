@@ -2,6 +2,7 @@ package com.example.torndashboard.config
 
 import android.content.Context
 import android.view.View
+import com.example.torndashboard.preferences.TimeBooleanArrayPreferences
 import com.example.torndashboard.utils.FileUtils
 import com.example.torndashboard.web.RetrofitClient
 import java.io.File
@@ -18,21 +19,9 @@ object AppConfig {
     var timeIsZeroTextVisibility : BooleanArray = booleanArrayOf(true, true, false, false, true, true, false, false)
 
     fun initialize(context: Context) {
-        initializeTimeFilter(context)
-    }
+        val timeBooleanArrayPreferences = TimeBooleanArrayPreferences(context)
 
-    fun initializeTimeFilter(context: Context){
-        /*
-        val configFile = File(context.filesDir, configFileName)
-        if (configFile.exists()) {
-            val fileUtils = FileUtils(context)
-            val key = fileUtils.getKey()
-
-            if (!key.isNullOrEmpty()) {
-                RetrofitClient.API_KEY = key
-            }
-        }
-
-         */
+        timeFilter = timeBooleanArrayPreferences.getTimeFilter()
+        timeIsZeroTextVisibility = timeBooleanArrayPreferences.getTimeIsZeroTextVisibility()
     }
 }

@@ -17,4 +17,5 @@
     <string name="event">Event:</string>
     <string name="wallet">Wallet</string>
     <string name="update">Update</string>
+    <string name="min_time_hint">右侧第一个按钮为，是否参与最快时间计算\n右侧第二个按钮为，若对应项时间为0是否替换Min处文本</string>
 </resources>

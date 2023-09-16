@@ -19,6 +19,12 @@ class LogFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLogBinding.inflate(inflater, container, false)
 
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -27,7 +33,5 @@ class LogFragment : Fragment() {
             startActivity(intent)
         }
         recyclerView.adapter = adapter
-
-        return binding.root
     }
 }

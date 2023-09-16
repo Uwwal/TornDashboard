@@ -1,35 +1,43 @@
 package com.example.torndashboard.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.torndashboard.R
 import com.example.torndashboard.config.AppConfig.timeMinText
+import com.example.torndashboard.preferences.TimeBooleanArrayPreferences
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class BooleanArrayAdapter(
     private var timeFilter: BooleanArray,
-    private var timeIsZeroTextVisibility : BooleanArray
+    private var timeIsZeroTextVisibility : BooleanArray,
+    var context: Context
 ) : RecyclerView.Adapter<BooleanArrayAdapter.ViewHolder>() {
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.textView)
-        private val timeFilterButton: RadioButton = itemView.findViewById(R.id.timeFilterButton)
-        private val timeIsZeroButton: RadioButton = itemView.findViewById(R.id.timeIsZeroButton)
+        private val timeFilterSwitch: SwitchMaterial = itemView.findViewById(R.id.timeFilterSwitch)
+        private val timeIsZeroSwitch: SwitchMaterial = itemView.findViewById(R.id.timeIsZeroSwitch)
 
         fun bind(position: Int) {
             textView.text = timeMinText[position]
-            timeFilterButton.isChecked = timeFilter[position]
-            timeIsZeroButton.isChecked = timeIsZeroTextVisibility[position]
+            timeFilterSwitch.isChecked = timeFilter[position]
+            timeIsZeroSwitch.isChecked = timeIsZeroTextVisibility[position]
 
-            timeFilterButton.setOnCheckedChangeListener { _, isChecked ->
+            val timeBooleanArrayPreferences = TimeBooleanArrayPreferences(context)
+
+            timeFilterSwitch.setOnCheckedChangeListener { _, isChecked ->
                 timeFilter[position] = isChecked
+
+                timeBooleanArrayPreferences.saveTimeFilter(timeFilter)
             }
 
-            timeIsZeroButton.setOnCheckedChangeListener { _, isChecked ->
+            timeIsZeroSwitch.setOnCheckedChangeListener { _, isChecked ->
                 timeIsZeroTextVisibility[position] = isChecked
+
+                timeBooleanArrayPreferences.saveTimeIsZeroTextVisibility(timeIsZeroTextVisibility)
             }
         }
     }
