@@ -76,11 +76,20 @@
                 tools:listitem="@layout/item_boolean_array" />
 
             <TextView
+                android:id="@+id/howToUseTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
-                android:text="@string/min_time_hint"
-                android:textColor="@color/grey" />
+                android:textSize="18sp"
+                android:text="@string/how_to_use" />
+
+            <TextView
+                android:id="@+id/mainHintTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:visibility="gone"
+                android:text="@string/main_hint" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

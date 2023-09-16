@@ -51,6 +51,10 @@ class SettingsFragment : Fragment() {
         binding.buttonStore.setOnClickListener {
             onButtonStoreClick()
         }
+
+        binding.howToUseTextView.setOnClickListener {
+            binding.mainHintTextView.visibility = View.VISIBLE
+        }
     }
 
     private fun checkConfigFile() {

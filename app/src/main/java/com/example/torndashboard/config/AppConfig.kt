@@ -3,9 +3,6 @@ package com.example.torndashboard.config
 import android.content.Context
 import android.view.View
 import com.example.torndashboard.preferences.TimeBooleanArrayPreferences
-import com.example.torndashboard.utils.FileUtils
-import com.example.torndashboard.web.RetrofitClient
-import java.io.File
 
 object AppConfig {
     const val configFileName = "config.json"
