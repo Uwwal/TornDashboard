@@ -1,14 +1,36 @@
 package com.example.torndashboard.web
 
+import android.content.Context
+import com.example.torndashboard.config.AppConfig
+import com.example.torndashboard.utils.FileUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 
 object RetrofitClient {
     private const val BASE_URL = "https://api.torn.com/"
 
     private var API_KEY = ""
+
+    fun checkApiKey(context: Context){
+        if(API_KEY.isEmpty()){
+            initializeApiKey(context)
+        }
+    }
+
+    private fun initializeApiKey(context: Context) {
+        val configFile = File(context.filesDir, AppConfig.configFileName)
+        if (configFile.exists()) {
+            val fileUtils = FileUtils(context)
+            val key = fileUtils.getKey()
+
+            if (!key.isNullOrEmpty()) {
+                API_KEY = key
+            }
+        }
+    }
 
     fun setApiKey(key:String){
         API_KEY = key

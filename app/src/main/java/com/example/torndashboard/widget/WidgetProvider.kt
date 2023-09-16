@@ -8,15 +8,18 @@ import android.content.Intent
 import android.util.Log
 import android.widget.RemoteViews
 import com.example.torndashboard.R
+import com.example.torndashboard.config.AppConfig
 import com.example.torndashboard.config.AppConfig.maxTime
 import com.example.torndashboard.config.AppConfig.timeFilter
 import com.example.torndashboard.utils.ApiResponseCallback
 import com.example.torndashboard.utils.CooldownsResponse
 import com.example.torndashboard.utils.EventsResponse
+import com.example.torndashboard.utils.FileUtils
 import com.example.torndashboard.utils.MoneyResponse
 import com.example.torndashboard.web.RetrofitClient
 import com.example.torndashboard.utils.StatsResponse
 import com.example.torndashboard.utils.TravelResponse
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -270,6 +273,8 @@ class WidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
+
+        context?.let { RetrofitClient.checkApiKey(it) }
 
         if (intent?.action == "BUTTON_CLICK") {
             val appWidgetId = intent.getIntExtra(
