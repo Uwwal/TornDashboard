@@ -1,9 +1,12 @@
 package com.example.torndashboard.fragment
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +15,9 @@ import com.example.torndashboard.config.AppConfig
 import com.example.torndashboard.config.AppConfig.timeFilter
 import com.example.torndashboard.config.AppConfig.timeIsZeroTextVisibility
 import com.example.torndashboard.databinding.FragmentSettingsBinding
+import com.example.torndashboard.preferences.WidgetProviderSharedPreferences
 import com.example.torndashboard.utils.FileUtils
+import com.example.torndashboard.utils.getMinTimeHHMMFormatted
 import com.example.torndashboard.web.RetrofitClient
 import com.google.gson.Gson
 import java.io.File

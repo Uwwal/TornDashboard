@@ -5,41 +5,43 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.provider.AlarmClock
 import android.text.Html
 import android.util.Log
 import android.widget.RemoteViews
+import android.widget.Toast
 import com.example.torndashboard.MainActivity
 import com.example.torndashboard.R
 import com.example.torndashboard.config.AppConfig
-import com.example.torndashboard.utils.itemsList
 import com.example.torndashboard.config.AppConfig.maxTime
 import com.example.torndashboard.config.AppConfig.timeFilter
 import com.example.torndashboard.config.AppConfig.timeIsZeroTextVisibility
 import com.example.torndashboard.config.AppConfig.timeMinText
+import com.example.torndashboard.preferences.WidgetProviderSharedPreferences
 import com.example.torndashboard.utils.ApiResponseCallback
 import com.example.torndashboard.utils.CooldownsResponse
-import com.example.torndashboard.utils.ErrorInfo
 import com.example.torndashboard.utils.ErrorResponse
 import com.example.torndashboard.utils.EventsResponse
 import com.example.torndashboard.utils.Item
 import com.example.torndashboard.utils.MoneyResponse
-import com.example.torndashboard.web.RetrofitClient
+import com.example.torndashboard.utils.NotificationReceiver
 import com.example.torndashboard.utils.StatsResponse
 import com.example.torndashboard.utils.TravelResponse
+import com.example.torndashboard.utils.getCurrentTimeFormatted
+import com.example.torndashboard.utils.getMinTimeHHMMFormatted
+import com.example.torndashboard.utils.itemsList
+import com.example.torndashboard.utils.showNotification
+import com.example.torndashboard.web.RetrofitClient
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
 
 class WidgetProvider : AppWidgetProvider() {
     private lateinit var views: RemoteViews
     private var minTime: Int = maxTime
     private var minText: String = ""
 
-    private fun getCurrentTimeFormatted(): String {
-        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        val currentTime = Date()
-        return dateFormat.format(currentTime)
-    }
 
     private fun setRemoteViewsText(id: Int, string: String) {
         views.setTextViewText(id, string)
@@ -48,19 +50,34 @@ class WidgetProvider : AppWidgetProvider() {
     private fun update(views: RemoteViews, context: Context?, appWidgetId: Int) {
         val appWidgetManager = AppWidgetManager.getInstance(context)
 
-        minText = ""
+        val widgetProviderSharedPreferences = context?.let { WidgetProviderSharedPreferences(it) }
+        var lastUpdateTime = widgetProviderSharedPreferences?.getLastUpdateTime() ?: -1
 
-        updateStats(views, appWidgetManager, appWidgetId)
+        val t = System.currentTimeMillis() - lastUpdateTime
+
         updateMoney(views, appWidgetManager, appWidgetId)
-        updateCooldowns(views, appWidgetManager, appWidgetId)
-        updateTravel(views, appWidgetManager, appWidgetId)
         updateEvents(views, appWidgetManager, appWidgetId)
 
-        setRemoteViewsText(R.id.currentUpdateTextView, getCurrentTimeFormatted())
+        if (lastUpdateTime == 0.toLong() || t > 30000) {
+            minText = ""
+            minTime = maxTime
 
-        appWidgetManager.updateAppWidget(appWidgetId, views)
 
-        minTime = maxTime
+            widgetProviderSharedPreferences?.let {
+                updateStats(views, appWidgetManager, appWidgetId,it)
+                updateCooldowns(views, appWidgetManager, appWidgetId, it)
+                updateTravel(views, appWidgetManager, appWidgetId, it)
+            }
+
+            setRemoteViewsText(R.id.currentUpdateTextView, getCurrentTimeFormatted())
+
+            lastUpdateTime = System.currentTimeMillis()
+            widgetProviderSharedPreferences?.saveLastUpdateTime(lastUpdateTime)
+
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+        } else {
+            updateError("距离上次更新间隔为${t / 1000}s，不足30s，返回上次结果！")
+        }
     }
 
     private fun updateEvents(
@@ -88,7 +105,7 @@ class WidgetProvider : AppWidgetProvider() {
                         val item = Item(
                             "Event",
                             "\t\t${Html.fromHtml(eventText, Html.FROM_HTML_MODE_LEGACY)}",
-                            dateFormat.format(timestamp*1000)
+                            dateFormat.format(timestamp * 1000)
                         )
 
                         itemsList.add(item)
@@ -114,7 +131,8 @@ class WidgetProvider : AppWidgetProvider() {
     private fun updateTravel(
         views: RemoteViews,
         appWidgetManager: AppWidgetManager,
-        appWidgetId: Int
+        appWidgetId: Int,
+        widgetProviderSharedPreferences: WidgetProviderSharedPreferences
     ) {
         val travelCall = RetrofitClient.apiService.getTravelInfo()
 
@@ -127,7 +145,7 @@ class WidgetProvider : AppWidgetProvider() {
 
                 travelResponse?.let { checkResponseError(it) }
 
-                updateMinTime(intArrayOf(timeLeft), 7)
+                updateMinTime(intArrayOf(timeLeft), 7, widgetProviderSharedPreferences)
 
                 updateTimeTextView(R.id.currentTravelTextView, timeLeft)
 
@@ -145,7 +163,8 @@ class WidgetProvider : AppWidgetProvider() {
     private fun updateCooldowns(
         views: RemoteViews,
         appWidgetManager: AppWidgetManager,
-        appWidgetId: Int
+        appWidgetId: Int,
+        widgetProviderSharedPreferences: WidgetProviderSharedPreferences
     ) {
         val cooldownsCall = RetrofitClient.apiService.getCooldownsInfo()
 
@@ -165,7 +184,7 @@ class WidgetProvider : AppWidgetProvider() {
 
                 val timeArray = intArrayOf(drug, booster, medical)
 
-                updateMinTime(timeArray, 4)
+                updateMinTime(timeArray, 4, widgetProviderSharedPreferences)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             },
@@ -179,10 +198,13 @@ class WidgetProvider : AppWidgetProvider() {
     private fun updateError(error: String) {
         val item = Item("Error", error, getCurrentTimeFormatted())
 
-        itemsList.add(item)
+        itemsList.add(0, item)
     }
 
-    private fun updateMinTime(timeArray: IntArray, start: Int = 0) {
+    private fun updateMinTime(
+        timeArray: IntArray, start: Int = 0,
+        widgetProviderSharedPreferences: WidgetProviderSharedPreferences
+    ) {
         var i = start
         val end = start + timeArray.size
         while (i < end) {
@@ -194,6 +216,9 @@ class WidgetProvider : AppWidgetProvider() {
                     if (timeArray[current] == 0) {
                         minText += timeMinText[i]
                     }
+
+                    widgetProviderSharedPreferences.saveMinTime(minTime)
+
                     updateTimeTextView(R.id.currentMinTextView, minTime, minText)
                 }
             }
@@ -240,7 +265,8 @@ class WidgetProvider : AppWidgetProvider() {
     private fun updateStats(
         views: RemoteViews,
         appWidgetManager: AppWidgetManager,
-        appWidgetId: Int
+        appWidgetId: Int,
+        widgetProviderSharedPreferences: WidgetProviderSharedPreferences
     ) {
         val statsCall = RetrofitClient.apiService.getStatsInfo()
 
@@ -285,7 +311,7 @@ class WidgetProvider : AppWidgetProvider() {
                     lifeStats?.maximum ?: -1
                 )
 
-                updateMinTime(timeArray)
+                updateMinTime(timeArray, widgetProviderSharedPreferences = widgetProviderSharedPreferences)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             },
@@ -311,6 +337,7 @@ class WidgetProvider : AppWidgetProvider() {
 
             setupUpdateClickEvent(context, appWidgetId)
             setupEventClickEvent(context, appWidgetId)
+            setupMinClickEvent(context, appWidgetId)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
@@ -318,7 +345,7 @@ class WidgetProvider : AppWidgetProvider() {
 
     private fun setupEventClickEvent(context: Context, appWidgetId: Int) {
         val intent = Intent(context, WidgetProvider::class.java)
-        intent.action = "Event_CLICK"
+        intent.action = "EVENT_CLICK"
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
         val pendingIntent = PendingIntent.getBroadcast(
             context, appWidgetId, intent,
@@ -341,27 +368,86 @@ class WidgetProvider : AppWidgetProvider() {
         views.setOnClickPendingIntent(R.id.updateTextView, pendingIntent)
     }
 
+    private fun setupMinClickEvent(context: Context, appWidgetId: Int) {
+        val intent = Intent(context, WidgetProvider::class.java)
+        intent.action = "MIN_CLICK"
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            context, appWidgetId, intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        views.setOnClickPendingIntent(R.id.minTextView, pendingIntent)
+        views.setOnClickPendingIntent(R.id.currentMinTextView, pendingIntent)
+    }
+
+
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
 
         context?.let { RetrofitClient.checkApiKey(it) }
 
-        if (intent?.action == "UPDATE_CLICK") {
-            val appWidgetId = intent.getIntExtra(
-                AppWidgetManager.EXTRA_APPWIDGET_ID,
-                AppWidgetManager.INVALID_APPWIDGET_ID
-            )
+        when (intent?.action) {
+            "UPDATE_CLICK" -> {
+                val appWidgetId = intent.getIntExtra(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID
+                )
 
-            context?.let { AppConfig.initialize(context) }
+                context?.let { AppConfig.initialize(context) }
 
-            views = RemoteViews(context?.packageName, R.layout.widget_layout)
+                views = RemoteViews(context?.packageName, R.layout.widget_layout)
 
-            update(views, context, appWidgetId)
-        } else if (intent?.action == "Event_CLICK") {
-            val mainActivityIntent = Intent(context, MainActivity::class.java)
-            mainActivityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                update(views, context, appWidgetId)
+            }
 
-            context?.startActivity(mainActivityIntent)
+            "EVENT_CLICK" -> {
+                val mainActivityIntent = Intent(context, MainActivity::class.java)
+                mainActivityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+                context?.startActivity(mainActivityIntent)
+            }
+
+            "MIN_CLICK" -> {
+                try {
+                    val widgetProviderSharedPreferences =
+                        context?.let { WidgetProviderSharedPreferences(it) }
+
+                    when (val lastMinTime = widgetProviderSharedPreferences?.getMinTime() ?: -1) {
+                        -1 -> {
+                            updateError("奇怪错误！我修不了这个")
+                        }
+
+                        0 -> {
+                            updateError("摸鱼时间为0，无法设置闹钟！")
+                        }
+
+                        else -> {
+                            val alarmIntent = Intent(AlarmClock.ACTION_SET_ALARM)
+                            alarmIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+                            val timeString = getMinTimeHHMMFormatted(lastMinTime)
+
+                            val parts = timeString.split(":")
+
+                            if (parts.size == 2) {
+                                alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, 1)
+                                alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, 1)
+
+                                showNotification(context)
+
+                                context?.startActivity(alarmIntent)
+                            } else {
+                                updateError("摸鱼时间为$timeString，格式错误！")
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    updateError(e.toString())
+                    e.printStackTrace()
+                }
+            }
         }
     }
 }
