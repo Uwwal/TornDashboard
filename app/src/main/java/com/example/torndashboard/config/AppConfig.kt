@@ -3,11 +3,13 @@ package com.example.torndashboard.config
 import android.content.Context
 import android.view.View
 import com.example.torndashboard.preferences.TimeBooleanArrayPreferences
+import com.example.torndashboard.utils.FileUtils
 
 object AppConfig {
     const val configFileName = "config.json"
 
     var textViewCheckRemindVisibility = View.GONE
+    var minAutoSetClockSwitchStatus = "false"
 
     const val maxTime = 864000
 
@@ -20,5 +22,10 @@ object AppConfig {
 
         timeFilter = timeBooleanArrayPreferences.getTimeFilter()
         timeIsZeroTextVisibility = timeBooleanArrayPreferences.getTimeIsZeroTextVisibility()
+
+        val fileUtils = FileUtils(context)
+
+        minAutoSetClockSwitchStatus =
+            fileUtils.get(fileUtils.minAutoSetClockSwitchStatus) ?: "false"
     }
 }

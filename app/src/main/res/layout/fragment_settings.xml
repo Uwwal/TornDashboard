@@ -61,6 +61,13 @@
                 android:textColor="@color/red"
                 android:visibility="gone" />
 
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/minAutoSetClockSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/switch_min_auto_clock_hint" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -7,9 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
 import android.text.Html
-import android.util.Log
 import android.widget.RemoteViews
-import android.widget.Toast
 import com.example.torndashboard.MainActivity
 import com.example.torndashboard.R
 import com.example.torndashboard.config.AppConfig
@@ -19,19 +17,19 @@ import com.example.torndashboard.config.AppConfig.timeIsZeroTextVisibility
 import com.example.torndashboard.config.AppConfig.timeMinText
 import com.example.torndashboard.preferences.WidgetProviderSharedPreferences
 import com.example.torndashboard.utils.ApiResponseCallback
+import com.example.torndashboard.utils.ClockNotification
 import com.example.torndashboard.utils.CooldownsResponse
 import com.example.torndashboard.utils.ErrorResponse
 import com.example.torndashboard.utils.EventsResponse
 import com.example.torndashboard.utils.Item
 import com.example.torndashboard.utils.MoneyResponse
-import com.example.torndashboard.utils.NotificationReceiver
 import com.example.torndashboard.utils.StatsResponse
 import com.example.torndashboard.utils.TravelResponse
 import com.example.torndashboard.utils.getCurrentTimeFormatted
 import com.example.torndashboard.utils.getMinTimeHHMMFormatted
 import com.example.torndashboard.utils.itemsList
-import com.example.torndashboard.utils.showNotification
 import com.example.torndashboard.web.RetrofitClient
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -62,9 +60,8 @@ class WidgetProvider : AppWidgetProvider() {
             minText = ""
             minTime = maxTime
 
-
             widgetProviderSharedPreferences?.let {
-                updateStats(views, appWidgetManager, appWidgetId,it)
+                updateStats(views, appWidgetManager, appWidgetId, it)
                 updateCooldowns(views, appWidgetManager, appWidgetId, it)
                 updateTravel(views, appWidgetManager, appWidgetId, it)
             }
@@ -247,7 +244,8 @@ class WidgetProvider : AppWidgetProvider() {
 
         moneyCall.enqueue(ApiResponseCallback<MoneyResponse>(
             onSuccess = { moneyResponse ->
-                val moneyOnHand = "$" + (moneyResponse?.money_onhand ?: -1).toString()
+                val moneyOnHand = "$" + NumberFormat.getNumberInstance(Locale.US)
+                    .format(moneyResponse?.money_onhand ?: -1)
 
                 moneyResponse?.let { checkResponseError(it) }
 
@@ -311,7 +309,10 @@ class WidgetProvider : AppWidgetProvider() {
                     lifeStats?.maximum ?: -1
                 )
 
-                updateMinTime(timeArray, widgetProviderSharedPreferences = widgetProviderSharedPreferences)
+                updateMinTime(
+                    timeArray,
+                    widgetProviderSharedPreferences = widgetProviderSharedPreferences
+                )
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             },
@@ -387,6 +388,7 @@ class WidgetProvider : AppWidgetProvider() {
         super.onReceive(context, intent)
 
         context?.let { RetrofitClient.checkApiKey(it) }
+        context?.let { AppConfig.initialize(context) }
 
         when (intent?.action) {
             "UPDATE_CLICK" -> {
@@ -395,7 +397,6 @@ class WidgetProvider : AppWidgetProvider() {
                     AppWidgetManager.INVALID_APPWIDGET_ID
                 )
 
-                context?.let { AppConfig.initialize(context) }
 
                 views = RemoteViews(context?.packageName, R.layout.widget_layout)
 
@@ -427,17 +428,26 @@ class WidgetProvider : AppWidgetProvider() {
                             val alarmIntent = Intent(AlarmClock.ACTION_SET_ALARM)
                             alarmIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
-                            val timeString = getMinTimeHHMMFormatted(lastMinTime)
+                            val timeString = getMinTimeHHMMFormatted(
+                                widgetProviderSharedPreferences!!.getLastUpdateTime(),
+                                lastMinTime
+                            )
 
                             val parts = timeString.split(":")
 
                             if (parts.size == 2) {
-                                alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, 1)
-                                alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, 1)
+                                if (!AppConfig.minAutoSetClockSwitchStatus.toBoolean()) {
+                                    alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, parts[0].toInt())
+                                    alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, parts[1].toInt())
+                                }
 
-                                showNotification(context)
+                                val clockNotification = ClockNotification()
+                                clockNotification.showNotification(
+                                    context,
+                                    "摸鱼时间为$timeString，注意闹铃！"
+                                )
 
-                                context?.startActivity(alarmIntent)
+                                context.startActivity(alarmIntent)
                             } else {
                                 updateError("摸鱼时间为$timeString，格式错误！")
                             }

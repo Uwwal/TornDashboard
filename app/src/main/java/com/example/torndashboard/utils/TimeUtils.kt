@@ -4,10 +4,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-fun getMinTimeHHMMFormatted(minTime: Int): String {
+fun getMinTimeHHMMFormatted(lastUpdateTime: Long, minTime: Int): String {
     val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-    val currentTime = Date()
-    val newTime = Date(currentTime.time + (minTime * 1000L))
+    val newTime = Date(lastUpdateTime + (minTime * 1000L))
 
     return dateFormat.format(newTime)
 }

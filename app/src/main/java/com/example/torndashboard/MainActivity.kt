@@ -10,23 +10,27 @@ import com.example.torndashboard.fragment.LogFragment
 import com.example.torndashboard.fragment.SettingsFragment
 import com.example.torndashboard.utils.FileUtils
 import com.example.torndashboard.web.RetrofitClient
-import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private fun initApiKey(){
-        val configFile = File(filesDir, AppConfig.configFileName)
-        if (configFile.exists()) {
-            val fileUtils = FileUtils(this)
-            val key = fileUtils.getKey()
-
-            if (!key.isNullOrEmpty()) {
-                RetrofitClient.setApiKey(key)
-            }
+    private fun initApiKey() {
+        val file = FileUtils(this)
+        val key = file.get(file.key)
+        if (!key.isNullOrEmpty()) {
+            RetrofitClient.setApiKey(key)
         }
     }
+
+    private fun initMinAutoSetClock() {
+        val file = FileUtils(this)
+        val minAutoSetClockSwitchStatus = file.get(file.minAutoSetClockSwitchStatus)
+        if (!minAutoSetClockSwitchStatus.isNullOrEmpty()) {
+            AppConfig.minAutoSetClockSwitchStatus = minAutoSetClockSwitchStatus
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = "日志"
 
         initApiKey()
+        initMinAutoSetClock()
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -49,11 +54,13 @@ class MainActivity : AppCompatActivity() {
                     showFragment(LogFragment())
                     true
                 }
+
                 R.id.action_settings -> {
                     supportActionBar?.title = "设置"
                     showFragment(SettingsFragment())
                     true
                 }
+
                 else -> false
             }
         }

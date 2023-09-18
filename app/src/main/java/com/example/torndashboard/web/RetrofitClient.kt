@@ -24,7 +24,7 @@ object RetrofitClient {
         val configFile = File(context.filesDir, AppConfig.configFileName)
         if (configFile.exists()) {
             val fileUtils = FileUtils(context)
-            val key = fileUtils.getKey()
+            val key = fileUtils.get(fileUtils.key)
 
             if (!key.isNullOrEmpty()) {
                 API_KEY = key

@@ -1,12 +1,9 @@
 package com.example.torndashboard.fragment
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.AlarmClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,9 +12,7 @@ import com.example.torndashboard.config.AppConfig
 import com.example.torndashboard.config.AppConfig.timeFilter
 import com.example.torndashboard.config.AppConfig.timeIsZeroTextVisibility
 import com.example.torndashboard.databinding.FragmentSettingsBinding
-import com.example.torndashboard.preferences.WidgetProviderSharedPreferences
 import com.example.torndashboard.utils.FileUtils
-import com.example.torndashboard.utils.getMinTimeHHMMFormatted
 import com.example.torndashboard.web.RetrofitClient
 import com.google.gson.Gson
 import java.io.File
@@ -53,8 +48,14 @@ class SettingsFragment : Fragment() {
         checkConfigFile()
         loadAndFillKey()
 
+        loadAndFillMinAutoSetClock()
+
         binding.buttonStore.setOnClickListener {
             onButtonStoreClick()
+        }
+
+        binding.minAutoSetClockSwitch.setOnClickListener {
+            onMinAutoSetClockSwitchClick()
         }
 
         binding.howToUseTextView.setOnClickListener {
@@ -62,11 +63,20 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    private fun loadAndFillMinAutoSetClock() {
+        val fileUtils = FileUtils(requireContext())
+        val minAutoSetClockStatus = fileUtils.get(fileUtils.minAutoSetClockSwitchStatus)
+
+        if (!minAutoSetClockStatus.isNullOrEmpty()) {
+            binding.minAutoSetClockSwitch.isChecked = minAutoSetClockStatus.toBoolean()
+        }
+    }
+
     private fun checkConfigFile() {
         val configFile = File(requireContext().filesDir, AppConfig.configFileName)
         if (!configFile.exists()) {
             try {
-                configFile.writeText("{}") // Create an empty JSON object
+                configFile.writeText("{}")
                 changeTextViewCheckRemindVisibility(View.VISIBLE)
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -76,7 +86,7 @@ class SettingsFragment : Fragment() {
 
     private fun loadAndFillKey() {
         val fileUtils = FileUtils(requireContext())
-        val key = fileUtils.getKey()
+        val key = fileUtils.get(fileUtils.key)
 
         if (key.isNullOrEmpty()) {
                 changeTextViewCheckRemindVisibility(View.VISIBLE)
@@ -87,14 +97,14 @@ class SettingsFragment : Fragment() {
     }
 
     private fun onButtonStoreClick() {
-        val configFile = File(requireContext().filesDir, AppConfig.configFileName)
-        val configMap = mutableMapOf<String, String>()
+        val file = FileUtils(requireContext())
+        val configMap = file.loadConfigMapFromFile()
 
         val keyText = binding.editTextKey.text.toString().trim()
         if (keyText.isNotEmpty()) {
-            configMap["KEY"] = keyText
+            configMap[file.key] = keyText
             try {
-                configFile.writeText(gson.toJson(configMap))
+                file.write(gson.toJson(configMap))
                 changeTextViewCheckRemindVisibility(View.GONE)
 
                 RetrofitClient.setApiKey(keyText)
@@ -105,4 +115,16 @@ class SettingsFragment : Fragment() {
             changeTextViewCheckRemindVisibility(View.VISIBLE)
         }
     }
+
+    private fun onMinAutoSetClockSwitchClick() {
+        val file = FileUtils(requireContext())
+        val configMap = file.loadConfigMapFromFile()
+
+        val isChecked = binding.minAutoSetClockSwitch.isChecked
+
+        configMap[file.minAutoSetClockSwitchStatus] = "$isChecked"
+
+        file.write(gson.toJson(configMap))
+    }
+
 }

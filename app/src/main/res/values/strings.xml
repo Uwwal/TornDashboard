@@ -20,4 +20,5 @@
     <string name="min_time_hint">右侧第一个按钮为，是否参与最快时间计算\n右侧第二个按钮为，若对应项时间为0是否替换Min处文本</string>
     <string name="how_to_use">咋用啊？</string>
     <string name="main_hint">第一步：输入你的key，然后储存\n第二步：添加桌面小部件，不同系统方法不同，不会请百度\n第三步：匿名送我money🥳\n其他提示：update点击效果是手动获取状态，event点击可以在日志里看到具体</string>
+    <string name="switch_min_auto_clock_hint">关闭Min自动设置闹钟</string>
 </resources>
